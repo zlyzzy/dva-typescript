@@ -1,7 +1,7 @@
 import { Model } from "dva";
-import { create, query, remove, update } from "../services/list";
+import { create, query, remove, update } from "SERVICES/list";
 
-const list: Model = {
+export default {
   namespace: "list",
   state: {
     list: []
@@ -25,12 +25,10 @@ const list: Model = {
       });
     }
   },
-
   effects: {
     *create({ payload }, { call, put }) {
       try {
         const { success } = yield call(create, payload);
-
         if (success) {
           yield put({
             type: "query"
@@ -44,7 +42,6 @@ const list: Model = {
     *delete({ payload }, { call, put }) {
       try {
         const { success } = yield call(remove, payload);
-
         if (success) {
           yield put({
             type: "query"
@@ -58,7 +55,6 @@ const list: Model = {
     *update({ payload }, { call, put }) {
       try {
         const { data, success } = yield call(update, payload);
-
         if (success) {
           yield put({
             type: "query"
@@ -84,6 +80,5 @@ const list: Model = {
       }
     }
   }
-};
+} as Model;
 
-export default list;

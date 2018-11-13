@@ -1,4 +1,5 @@
 import { routerRedux } from "dva/router";
+import { Model } from "dva";
 
 export default {
   namespace: "user",
@@ -52,4 +53,4 @@ export default {
       return { ...state, ...action.payload };
     }
   }
-};
+} as Model;
