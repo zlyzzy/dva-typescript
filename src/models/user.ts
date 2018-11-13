@@ -30,7 +30,7 @@ export default {
           type: "querySuccess",
           payload: { loading: true }
         });
-        yield put(routerRedux.push("/index"));
+        yield put(routerRedux.push("/list/table-list"));
       } finally {
         yield put({
           type: "querySuccess",
