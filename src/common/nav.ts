@@ -23,7 +23,7 @@ const data = [
         icon: "table",
         children: [
           {
-            name: "查询表格",
+            name: "mock列表",
             path: "table-list",
             component: TableList
           }

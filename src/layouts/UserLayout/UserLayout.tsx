@@ -6,6 +6,7 @@ import styles from "./UserLayout.less";
 
 class UserLayout extends React.PureComponent {
   public render() {
+    console.log(getRouteData("UserLayout"))
     return (
       <div className={styles.container}>
         <div className={styles.top}>

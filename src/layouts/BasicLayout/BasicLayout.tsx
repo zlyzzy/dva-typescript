@@ -147,6 +147,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               target={item.target}
               replace={itemPath === location.pathname}
             >
+              <Icon type="home" />
               <span>{item.name}</span>
             </Link>
           )}
@@ -164,6 +165,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   };
 
   public render() {
+
     const { collapsed } = this.props;
 
     const menuProps = collapsed
@@ -171,6 +173,8 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
       : {
           openKeys: this.state.openKeys
         };
+      console.log(getRouteData("BasicLayout"))
+
 
     const layout = (
       <Layout>

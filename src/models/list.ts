@@ -72,7 +72,6 @@ const list: Model = {
     *query({ payload }, { call, put }) {
       try {
         const { data, success } = yield call(query, payload);
-
         if (success) {
           yield put({
             type: "listSave",

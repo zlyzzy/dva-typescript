@@ -29,7 +29,7 @@ export default {
           type: "querySuccess",
           payload: { loading: true }
         });
-        yield put(routerRedux.push("/dashboard/analysis"));
+        yield put(routerRedux.push("/index"));
       } finally {
         yield put({
           type: "querySuccess",

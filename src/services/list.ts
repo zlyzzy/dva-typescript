@@ -1,6 +1,7 @@
-import { del, get, post, put } from "UTILS/request";
+import fetch from "UTILS/request";
 
-export const create = async param => post("/api/list", { param });
-export const query = async param => get("/api/list", { param });
-export const update = async param => put(`/api/list/${param.id}`, { param });
-export const remove = async id => del(`/api/list/${id}`);
+export const query = async param => fetch({url:'list',params: param});
+export const create = async param => fetch({url:'list',params: param});
+export const update = async param => fetch({url:'list',params: param});
+export const remove = async param => fetch({url:'list',params: param});
+

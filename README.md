@@ -24,3 +24,6 @@ npm install
 2. [辅助React 添加多个class](https://www.npmjs.com/package/classnames)
 3. [dva = React-Router + Redux + Redux-saga](https://dvajs.com)
 4. [lodash](https://www.npmjs.com/package/lodash)
+5. query-string
+再也无法从 React Router v4 中获取 URL 的查询字符串了，所以我们使用的是 query-string来处理。
+
