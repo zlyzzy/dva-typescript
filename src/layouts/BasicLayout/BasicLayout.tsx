@@ -2,7 +2,6 @@ import { Divider, Icon, Layout, Menu, Button } from "antd";
 import classNames from "classnames";
 import { connect } from "dva";
 import { Link, Redirect, Route, Switch, routerRedux } from "dva/router";
-import { groupBy } from "lodash";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import { getNavData } from "COMMON/nav";
@@ -101,6 +100,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
     });
   };
 
+  //生成侧栏菜单的函数
   public getNavMenuItems = (menusData, parentPath = "") => {
     const { location } = this.props;
     if (!menusData) {
