@@ -5,7 +5,7 @@ import baseURL from './url'; //url地址
 import * as utils from './utils';
 
 let xhr = ({ url,body,method,contentType }) => {
-  let _obj: AxiosRequestConfig = {
+  let requestConfig: AxiosRequestConfig = {
     withCredentials: true,
     url: url,
     method: method,
@@ -15,16 +15,16 @@ let xhr = ({ url,body,method,contentType }) => {
     }
   }
   if (contentType) {
-    _obj.headers['Content-Type'] = 'application/json;charset=UTF-8';
+    requestConfig.headers['Content-Type'] = 'application/json;charset=UTF-8';
   }
 
   if (method == 'get') { //axios method不同传入参数的方式也不一样
-    _obj.params = body;
+    requestConfig.params = body;
   } else {
-    _obj.data = contentType ? body : qs.stringify(body);
+    requestConfig.data = contentType ? body : qs.stringify(body);
   }
   return new Promise((resolve, reject) => {
-    axios(_obj)
+    axios(requestConfig)
       .then((res) => {
         //code = 10000 表示成功
         //code = 60001 没有访问权限
@@ -51,7 +51,6 @@ let xhr = ({ url,body,method,contentType }) => {
 
   });
 }
-
 
 
 export default function fetch({ url = '', params = {}, method = 'get', contentType = 'form' }) {
