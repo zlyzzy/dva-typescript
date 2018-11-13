@@ -1,5 +1,5 @@
 import { Route, routerRedux, Switch } from "dva/router";
-import * as React from "react";
+import React from "react";
 import BasicLayout from "LAYOUTS/BasicLayout/BasicLayout";
 import UserLayout from "LAYOUTS/UserLayout/UserLayout";
 

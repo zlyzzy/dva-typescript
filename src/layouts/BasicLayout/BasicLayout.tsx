@@ -103,7 +103,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
 
   public getNavMenuItems = (menusData, parentPath = "") => {
     const { location } = this.props;
-
     if (!menusData) {
       return [];
     }
@@ -112,7 +111,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
         return null;
       }
       let itemPath;
-
       item.path.indexOf("http") === 0
         ? (itemPath = item.path)
         : (itemPath = `${parentPath}/${item.path || ""}`.replace(/\/+/g, "/"));
@@ -186,7 +184,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
           className={styles.sider}
         >
           <div className={styles.logo}>
-            <img src={require("IMAGES/logo.png")} alt="logo" />
+            <img src={require("ASSETS/images/logo.png")} alt="logo" />
             <h1>导航系统</h1>
           </div>
           <Menu
@@ -210,6 +208,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
 
             <Divider dashed={true} type="vertical" style={{ height: "50px" }} />
             <Button
+              className="pull-right mt15"
               onClick={() => {
                 this.props.dispatch(
                   routerRedux.push({

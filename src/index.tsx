@@ -1,7 +1,7 @@
 import "@babel/polyfill";
 import dva from "dva";
 import createLoading from "dva-loading";
-import "./index.less";
+import "ASSETS/style/index.less";
 import models from "./models";
 import router from "./router";
 

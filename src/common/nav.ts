@@ -2,7 +2,7 @@ import BasicLayout from "LAYOUTS/BasicLayout/BasicLayout";
 import UserLayout from "LAYOUTS/UserLayout/UserLayout";
 import IndexPage from "ROUTES/IndexPage/IndexPage";
 import TableList from "ROUTES/List/TableList";
-import Login from "ROUTES/User/Login";
+import Login from "ROUTES/Login/Login";
 //动态创建路由
 const data = [
   {
@@ -12,16 +12,10 @@ const data = [
     path: "",
     children: [
       {
-        name: "Dashboard",
+        name: "首页",
         icon: "dashboard",
-        path: "dashboard",
-        children: [
-          {
-            name: "分析页",
-            path: "analysis",
-            component: IndexPage
-          }
-        ]
+        path: "index",
+        component: IndexPage
       },
       {
         name: "列表页",

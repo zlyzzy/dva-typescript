@@ -11,7 +11,7 @@ const env = process.argv.slice(-1)[0];
 // 获取自己定义的要覆盖antd默认样式的文件
 const themeVariables = lessToJs(
   fs.readFileSync(
-    path.join(__dirname, '../src/assets/style/theme.less'),
+    path.join(__dirname, '../src/assets/style/variable.less'),
     'utf8',
   ),
 );
@@ -159,7 +159,7 @@ module.exports = {
       COMMON: path.resolve(__dirname, '../src/common'),
       LAYOUTS: path.resolve(__dirname, '../src/layouts'),
       COMPONENTS: path.resolve(__dirname, '../src/components'),
-      IMAGES: path.resolve(__dirname, '../src/assets/images'),
+      ASSETS: path.resolve(__dirname, '../src/assets'),
       MODELS: path.resolve(__dirname, '../src/models'),
       SERVICES: path.resolve(__dirname, '../src/services'),
       UTILS: path.resolve(__dirname, '../src/utils'),

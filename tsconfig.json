@@ -38,7 +38,7 @@
       "COMMON/*":["./src/common/*"],
       "LAYOUTS/*": ["./src/layouts/*"],
       "COMPONENTS/*": ["./src/components/*"],
-      "IMAGES/*": ["./src/assets/images/*"],
+      "ASSETS/*": ["./src/assets/*"],
       "MODELS/*": ["./src/models/*"],
       "SERVICES/*": ["./src/services/*"],
       "UTILS/*": ["./src/utils/*"],
