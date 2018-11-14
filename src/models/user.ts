@@ -44,11 +44,13 @@ export default {
       }
     },
     *getDepartmentList({},{call,put}){
-      const { data } = yield call(department);
-      yield put({
-        type: 'saveDepartmentList',
-        payload: data
-      })
+      const { data, success } = yield call(department);
+      if(success){
+        yield put({
+          type: 'saveDepartmentList',
+          payload: data
+        })
+      }
     }
   },
   reducers: {

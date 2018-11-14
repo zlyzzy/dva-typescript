@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import styles from "./Login.less";
 
 const FormItem = Form.Item;
-interface IProps {
+interface IProps extends  FormComponentProps{
   dispatch?: any;
   loading?: any
   user: {
@@ -17,7 +17,7 @@ interface IProps {
   };
 }
 
-class Login extends Component<IProps & FormComponentProps, any> {
+class Login extends Component<IProps, any> {
 
   constructor(props) {
     super(props);
@@ -53,7 +53,6 @@ class Login extends Component<IProps & FormComponentProps, any> {
               ]
             })(
               <Input
-                size="large"
                 prefix={<Icon type="user" className={styles.prefixIcon} />}
                 placeholder="用户名"
               />
@@ -69,7 +68,6 @@ class Login extends Component<IProps & FormComponentProps, any> {
               ]
             })(
               <Input
-                size="large"
                 prefix={<Icon type="lock" className={styles.prefixIcon} />}
                 type="password"
                 placeholder="密码"
@@ -77,14 +75,14 @@ class Login extends Component<IProps & FormComponentProps, any> {
             )}
           </FormItem>
 
-          <FormItem className={styles.additional}>
+          <FormItem>
             <span className="pull-right color-primary pointer" onClick={()=>{dispatch(routerRedux.push("/user/register"))}}>
               没有账号？注册
             </span>
             <Button
               size="large"
               loading={loading['user/login']}
-              className={styles.submit}
+              className="wp100"
               type="primary"
               htmlType="submit"
             >
@@ -103,3 +101,29 @@ export default connect(state => ({
   loading: state.loading.effects
 }))(WrappedNormalLoginForm);
 
+
+// export default connect(state => ({
+//   user: state.user
+// }))(
+//   Form.create<IProps>({
+//     onFieldsChange(props, changedFields) {
+//       props.dispatch({
+//         type: "user/save",
+//         payload: changedFields
+//       });
+//     },
+//     mapPropsToFields(props) {
+//       const { user } = props;
+//       return {
+//         username: Form.createFormField({
+//           ...user.loginData.username,
+//           value: user.loginData.username.value
+//         }),
+//         password: Form.createFormField({
+//           ...user.loginData.password,
+//           value: user.loginData.password.value
+//         })
+//       };
+//     }
+//   })(Login)
+// );

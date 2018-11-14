@@ -9,7 +9,7 @@ import { FormComponentProps } from "antd/lib/form";
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-interface IProps {
+interface IProps extends FormComponentProps {
   dispatch?: any;
   location?: any;
   user: {
@@ -17,7 +17,7 @@ interface IProps {
     departmentList: Array<{ id: number, name: string }>
   };
 }
-class Register extends Component<IProps & FormComponentProps, any>{
+class Register extends Component<IProps, any>{
   constructor(props) {
     super(props);
   }
@@ -43,14 +43,14 @@ class Register extends Component<IProps & FormComponentProps, any>{
             {getFieldDecorator('username', {
               rules: [{ required: true, message: '请输入用户名!' }],
             })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+              <Input prefix={<Icon type="user" className={styles.prefixIcon} />} placeholder="用户名" />
             )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: '请输入密码!' }],
             })(
-              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
+              <Input prefix={<Icon type="lock" className={styles.prefixIcon} />} type="password" placeholder="密码" />
             )}
           </FormItem>
           <FormItem>

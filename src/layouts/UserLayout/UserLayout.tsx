@@ -10,7 +10,7 @@ class UserLayout extends React.PureComponent {
     console.log(getRouteData("UserLayout"))
     return (
       <div className={styles.container}>
-        <div className={styles.top}>
+        <div>
           <p className={styles.title}>灵犀金融内部导航系统</p>
           {getRouteData("UserLayout").map(item => (
             <Route

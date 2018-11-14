@@ -11,7 +11,7 @@ export default function({ history }) {
       <Switch>
         {/* 只会运行其中一个 <route>，*/}
         <Route path="/user" component={UserLayout} />
-        <Route path="/" exact={true} component={BasicLayout} />
+        <Route path="/" component={BasicLayout} />
       </Switch>
     </ConnectedRouter>
   );

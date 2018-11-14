@@ -38,7 +38,7 @@ let xhr = ({ url,body,method,contentType }) => {
         }
         if (res.data.code && res.data.code != 10000) {
           message.error(res.statusText);
-          return false;
+          return resolve({success: false, ...res})
         }
         return resolve({
           ...res,
@@ -47,6 +47,10 @@ let xhr = ({ url,body,method,contentType }) => {
       })
       .catch((e) => {
         message.error('服务器请求失败');
+        return resolve({
+          data: null,
+          success: false
+        });
       })
 
   });
