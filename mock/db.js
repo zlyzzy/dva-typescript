@@ -5,6 +5,9 @@ const { Random } = Mock;
 module.exports = function () {
   const data = {
     list: [],
+    login:[],
+    department:[],
+    register:[],
     others: {},
   };
   const images = [1, 2, 3].map(() => Random.image('200x100', Random.color(), Random.word(2, 6)));
@@ -19,5 +22,16 @@ module.exports = function () {
       images: images.slice(0, Random.integer(1, 3)),
     });
   }
+  data.department = [{
+    name:'前端技术部',
+    id: 1
+  },{
+    name:'测试部',
+    id: 2
+  },{
+    name: '平台产品部',
+    id: 3
+  }];
+
   return data;
 };

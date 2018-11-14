@@ -3,6 +3,7 @@ import { Link, Route } from "dva/router";
 import React from "react";
 import { getRouteData } from "UTILS/utils";
 import styles from "./UserLayout.less";
+import RegisterComponent from 'ROUTES/Register/Register';
 
 class UserLayout extends React.PureComponent {
   public render() {
@@ -19,6 +20,7 @@ class UserLayout extends React.PureComponent {
               component={item.component}
             />
           ))}
+          <Route exact={true} key="/user/register" path="/user/register" component={RegisterComponent}></Route>
         </div>
       </div>
     );

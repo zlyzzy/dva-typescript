@@ -1,18 +1,16 @@
 import { routerRedux } from "dva/router";
 import { Model } from "dva";
+import { register, login, department } from "SERVICES/user";
+import { message } from "antd";
 
 export default {
   namespace: "user",
   state: {
-    loading: false,
     loginData: {
-      username: {
-        value: ""
-      },
-      password: {
-        value: ""
-      }
-    }
+      username: '',
+      password: ''
+    },
+    departmentList: []
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -20,26 +18,46 @@ export default {
         if (pathname === "/user/login") {
           // 做你想做的事情
         }
+        if(pathname === '/user/register'){
+          dispatch({
+            type: 'getDepartmentList'
+          })
+        }
       });
     }
   },
   effects: {
     *login({ payload }, { call, put }) {
-      try {
+      const { success } = yield call(login,payload);
+      if(success){
         yield put({
-          type: "querySuccess",
-          payload: { loading: true }
+          type: "save",
+          payload: payload
         });
         yield put(routerRedux.push("/list/table-list"));
-      } finally {
-        yield put({
-          type: "querySuccess",
-          payload: { loading: false }
-        });
       }
+    },
+    *register({ playload }, { call, put }) {
+      const { success } = yield call(register, playload);
+      if (success) {
+        message.success("注册成功");
+      }
+    },
+    *getDepartmentList({},{call,put}){
+      const { data } = yield call(department);
+      yield put({
+        type: 'saveDepartmentList',
+        payload: data
+      })
     }
   },
   reducers: {
+    saveDepartmentList(state, { payload }){
+      return {
+        ... state,
+        departmentList: payload
+      }
+    },
     save(state, { payload }) {
       return {
         ...state,
@@ -48,9 +66,6 @@ export default {
           ...payload
         }
       };
-    },
-    querySuccess(state, action) {
-      return { ...state, ...action.payload };
     }
   }
 } as Model;

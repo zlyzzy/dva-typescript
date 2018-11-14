@@ -8,6 +8,7 @@ interface IProps {
   dispatch?: any;
   list?: object[];
   loading: any;
+  history?: any
 }
 
 @connect(state => ({
@@ -15,6 +16,11 @@ interface IProps {
   loading: state.loading.effects
 }))
 export default class Index extends Component<IProps, any> {
+
+  constructor(props) {
+    super(props);
+    console.log(this.props.history)
+  }
   public render() {
     const { list, dispatch, loading } = this.props;
 

@@ -1,27 +1,15 @@
-import {
-  Alert,
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Icon,
-  Input,
-  Row,
-  Tabs
-} from "antd";
+import { Button,Form,Icon,Input } from "antd";
 import { connect } from "dva";
 import { FormComponentProps } from "antd/lib/form";
-import { Link, routerRedux } from "dva/router";
+import { routerRedux } from "dva/router";
 import React, { Component } from "react";
 import styles from "./Login.less";
 
 const FormItem = Form.Item;
-const { TabPane } = Tabs;
-
 interface IProps {
   dispatch?: any;
+  loading?: any
   user: {
-    loading?: boolean;
     loginData: {
       username: any;
       password: any;
@@ -30,17 +18,12 @@ interface IProps {
 }
 
 class Login extends Component<IProps & FormComponentProps, any> {
-  public interval;
 
   constructor(props) {
     super(props);
   }
 
-  public componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  public handleSubmit = e => {
+  handleSubmit = e => {
     e.preventDefault();
 
     this.props.form.validateFields({ force: true }, (err, values) => {
@@ -53,11 +36,8 @@ class Login extends Component<IProps & FormComponentProps, any> {
     });
   };
 
-  public render() {
-    const {
-      form,
-      user: { loading }
-    } = this.props;
+  render() {
+    const { form, loading ,dispatch} = this.props;
     const { getFieldDecorator } = form;
 
     return (
@@ -98,16 +78,12 @@ class Login extends Component<IProps & FormComponentProps, any> {
           </FormItem>
 
           <FormItem className={styles.additional}>
-            {getFieldDecorator("remember", {
-              valuePropName: "checked",
-              initialValue: true
-            })(<Checkbox>自动登录</Checkbox>)}
-            <a className={styles.forgot} href="">
-              忘记密码
-            </a>
+            <span className="pull-right color-primary pointer" onClick={()=>{dispatch(routerRedux.push("/user/register"))}}>
+              没有账号？注册
+            </span>
             <Button
               size="large"
-              loading={loading}
+              loading={loading['user/login']}
               className={styles.submit}
               type="primary"
               htmlType="submit"
@@ -121,28 +97,9 @@ class Login extends Component<IProps & FormComponentProps, any> {
   }
 }
 
+const WrappedNormalLoginForm = Form.create()(Login);
 export default connect(state => ({
-  user: state.user
-}))(
-  Form.create<IProps>({
-    onFieldsChange(props, changedFields) {
-      props.dispatch({
-        type: "user/save",
-        payload: changedFields
-      });
-    },
-    mapPropsToFields(props) {
-      const { user } = props;
-      return {
-        username: Form.createFormField({
-          ...user.loginData.username,
-          value: user.loginData.username.value
-        }),
-        password: Form.createFormField({
-          ...user.loginData.password,
-          value: user.loginData.password.value
-        })
-      };
-    }
-  })(Login)
-);
+  user: state.user,
+  loading: state.loading.effects
+}))(WrappedNormalLoginForm);
+
