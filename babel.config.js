@@ -13,6 +13,7 @@ module.exports = function (api) {
   const plugins = [
     'react-hot-loader/babel',
     '@babel/plugin-transform-runtime',
+    "@babel/plugin-syntax-dynamic-import",
     ['import', { libraryName: 'antd', libraryDirectory: 'lib', style: true }, 'ant'],
     [
       'import',

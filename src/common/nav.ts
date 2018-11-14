@@ -1,38 +1,27 @@
-import BasicLayout from "LAYOUTS/BasicLayout/BasicLayout";
-import UserLayout from "LAYOUTS/UserLayout/UserLayout";
-import IndexPage from "ROUTES/IndexPage/IndexPage";
-import TableList from "ROUTES/List/TableList";
-import Login from "ROUTES/Login/Login";
-//动态创建路由
+
 const data = [
   {
-    component: BasicLayout,
     layout: "BasicLayout",
-    name: "首页",
-    path: "",
     children: [
       {
         name: "首页",
         icon: "dashboard",
-        path: "index",
-        component: IndexPage
+        path: "index"
       },
       {
         name: "列表页",
-        path: "list",
+        path: "base",
         icon: "table",
         children: [
           {
             name: "mock列表",
-            path: "table-list",
-            component: TableList
+            path: "list",
           }
         ]
       }
     ]
   },
   {
-    component: UserLayout,
     layout: "UserLayout",
     children: [
       {
@@ -42,8 +31,11 @@ const data = [
         children: [
           {
             name: "登录",
-            path: "login",
-            component: Login
+            path: "login"
+          },
+          {
+            name: "注册",
+            path: "register"
           }
         ]
       }

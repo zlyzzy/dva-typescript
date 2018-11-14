@@ -5,7 +5,6 @@ import { Link, Redirect, Route, Switch, routerRedux } from "dva/router";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import { getNavData } from "COMMON/nav";
-import { getRouteData } from "UTILS/utils";
 import styles from "./BasicLayout.less";
 
 const { Header, Sider, Content } = Layout;
@@ -57,6 +56,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
       (arr, current) => arr.concat(current.children),
       []
     );
+    console.log(this.menus )
     this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props)
     };
@@ -78,6 +78,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
     if (keys.length === 1 && keys[0] === "") {
       return [this.menus[0].key];
     }
+    console.log(keys)
     return keys;
   };
 
@@ -91,6 +92,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   };
 
   public handleOpenChange = openKeys => {
+    console.log(openKeys)
     const lastOpenKey = openKeys[openKeys.length - 1];
     const isMainMenu = this.menus.some(
       item => item.key === lastOpenKey || item.path === lastOpenKey
@@ -173,8 +175,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
       : {
           openKeys: this.state.openKeys
         };
-      console.log(getRouteData("BasicLayout"))
-
 
     const layout = (
       <Layout>
@@ -226,17 +226,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             </Button>
           </Header>
           <Content style={{ margin: "24px 24px 0", height: "100%" }}>
-            <Switch>
-              {getRouteData("BasicLayout").map(item => (
-                <Route
-                  exact={item.exact}
-                  key={item.path}
-                  path={item.path}
-                  component={item.component}
-                />
-              ))}
-              <Redirect exact={true} from="/" to="/user/login" />
-            </Switch>
+            {this.props.children}
           </Content>
         </Layout>
       </Layout>

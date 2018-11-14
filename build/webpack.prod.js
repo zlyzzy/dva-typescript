@@ -16,7 +16,7 @@ module.exports = function (env) {
     },
     output: {
       path: path.join(__dirname, '/../dist/'),
-      filename: 'assets/js/[name].js',
+      filename: 'assets/js/[name][hash].js',
     },
     plugins: [
       new webpack.LoaderOptionsPlugin({

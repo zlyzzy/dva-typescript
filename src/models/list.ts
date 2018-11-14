@@ -17,7 +17,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        if (pathname === "/list/table-list") {
+        if (pathname === "/base/list") {
           dispatch({
             type: "query"
           });

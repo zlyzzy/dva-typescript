@@ -34,7 +34,7 @@ export default {
           type: "save",
           payload: payload
         });
-        yield put(routerRedux.push("/list/table-list"));
+        yield put(routerRedux.push("/base/list"));
       }
     },
     *register({ playload }, { call, put }) {
