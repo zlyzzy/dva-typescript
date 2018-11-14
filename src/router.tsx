@@ -1,4 +1,4 @@
-import { Route, Switch, Router } from "dva/router";
+import { Route, Switch, Router,Redirect } from "dva/router";
 import React from "react";
 import dynamic from 'dva/dynamic';
 
@@ -63,6 +63,7 @@ export default function (app) {
             <Route path="/user/register" exact={true} component={Register} />
             <Route path="/user/login" exact={true} component={Login} />
           </UserLayout>
+          <Redirect path="/" to={{pathname: '/user/login'}} />
         </Switch>
       </Router>
     );

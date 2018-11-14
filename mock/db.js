@@ -12,7 +12,7 @@ module.exports = function () {
   };
   const images = [1, 2, 3].map(() => Random.image('200x100', Random.color(), Random.word(2, 6)));
   for (let i = 0; i < 100; i += 1) {
-    const content = Random.cparagraph(0, 10);
+    const content = Random.cparagraph(0, 30);
     data.list.push({
       id: i,
       title: Random.cword(8, 10),

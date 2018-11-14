@@ -6,6 +6,7 @@ import React from "react";
 import { ContainerQuery } from "react-container-query";
 import { getNavData } from "COMMON/nav";
 import styles from "./BasicLayout.less";
+import classnames from 'classnames';
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -56,7 +57,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
       (arr, current) => arr.concat(current.children),
       []
     );
-    console.log(this.menus )
     this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props)
     };
@@ -78,7 +78,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
     if (keys.length === 1 && keys[0] === "") {
       return [this.menus[0].key];
     }
-    console.log(keys)
     return keys;
   };
 
@@ -92,7 +91,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   };
 
   public handleOpenChange = openKeys => {
-    console.log(openKeys)
     const lastOpenKey = openKeys[openKeys.length - 1];
     const isMainMenu = this.menus.some(
       item => item.key === lastOpenKey || item.path === lastOpenKey
@@ -175,7 +173,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
       : {
           openKeys: this.state.openKeys
         };
-
     const layout = (
       <Layout>
         <Sider
@@ -202,7 +199,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             {this.getNavMenuItems(this.menus)}
           </Menu>
         </Sider>
-        <Layout>
+        <Layout className={classNames({[styles.ml256]: !collapsed,'ml80': collapsed})}>
           <Header className={styles.header}>
             <Icon
               className={styles.trigger}
@@ -225,7 +222,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               退出
             </Button>
           </Header>
-          <Content style={{ margin: "24px 24px 0", height: "100%" }}>
+          <Content style={{ margin: "24px 24px 0",overflow: 'initial' }}>
             {this.props.children}
           </Content>
         </Layout>
