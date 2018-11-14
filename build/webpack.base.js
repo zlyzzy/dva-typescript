@@ -141,8 +141,9 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
+      path: path.join(__dirname, '/../dist/'),
       filename: '[name].[chunkhash:8].css',
-      chunkFilename: '[name].[chunkhash:8].css',
+      chunkFilename: 'assets/css/[name].[chunkhash:8].css',
     }),
     new HtmlWebpackPlugin({
       title: '导航系统',
