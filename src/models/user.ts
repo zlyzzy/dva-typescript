@@ -2,15 +2,17 @@ import { routerRedux } from "dva/router";
 import { Model } from "dva";
 import { register, login, department } from "SERVICES/user";
 import { message } from "antd";
+import navList from "COMMON/nav";
 
 export default {
   namespace: "user",
   state: {
     loginData: {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     },
-    departmentList: []
+    departmentList: [],
+    navList: []
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -18,23 +20,27 @@ export default {
         if (pathname === "/user/login") {
           // 做你想做的事情
         }
-        if(pathname === '/user/register'){
+        if (pathname === "/user/register") {
           dispatch({
-            type: 'getDepartmentList'
-          })
+            type: "getDepartmentList"
+          });
         }
       });
     }
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const { success } = yield call(login,payload);
-      if(success){
+      const { success } = yield call(login, payload);
+      if (success) {
         yield put({
           type: "save",
           payload: payload
         });
-        yield put(routerRedux.push("/base/list"));
+        yield put({
+          type: "saveNavList",
+          payload: navList
+        });
+        yield put(routerRedux.push("/base/index"));
       }
     },
     *register({ playload }, { call, put }) {
@@ -43,22 +49,28 @@ export default {
         message.success("注册成功");
       }
     },
-    *getDepartmentList({},{call,put}){
+    *getDepartmentList({}, { call, put }) {
       const { data, success } = yield call(department);
-      if(success){
+      if (success) {
         yield put({
-          type: 'saveDepartmentList',
+          type: "saveDepartmentList",
           payload: data
-        })
+        });
       }
     }
   },
   reducers: {
-    saveDepartmentList(state, { payload }){
+    saveNavList(state, { payload }) {
       return {
-        ... state,
+        ...state,
+        navList: payload
+      };
+    },
+    saveDepartmentList(state, { payload }) {
+      return {
+        ...state,
         departmentList: payload
-      }
+      };
     },
     save(state, { payload }) {
       return {

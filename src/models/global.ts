@@ -3,9 +3,7 @@ import { Model } from "dva";
 export default {
   namespace: "global",
   state: {
-    collapsed: false,
-    notices: [],
-    fetchingNotices: false
+    collapsed: false //全局折叠
   },
   effects: {},
   reducers: {
@@ -13,25 +11,6 @@ export default {
       return {
         ...state,
         collapsed: payload
-      };
-    },
-    saveNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: payload,
-        fetchingNotices: false
-      };
-    },
-    saveClearedNotices(state, { payload }) {
-      return {
-        ...state,
-        notices: state.notices.filter(item => item.type !== payload)
-      };
-    },
-    changeNoticeLoading(state, { payload }) {
-      return {
-        ...state,
-        fetchingNotices: payload
       };
     }
   }

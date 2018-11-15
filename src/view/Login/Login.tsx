@@ -1,4 +1,4 @@
-import { Button,Form,Icon,Input } from "antd";
+import { Button, Form, Icon, Input } from "antd";
 import { connect } from "dva";
 import { FormComponentProps } from "antd/lib/form";
 import { routerRedux } from "dva/router";
@@ -6,9 +6,9 @@ import React, { Component } from "react";
 import styles from "./Login.less";
 
 const FormItem = Form.Item;
-interface IProps extends  FormComponentProps{
+interface IProps extends FormComponentProps {
   dispatch?: any;
-  loading?: any
+  loading?: any;
   user: {
     loginData: {
       username: any;
@@ -18,7 +18,6 @@ interface IProps extends  FormComponentProps{
 }
 
 class Login extends Component<IProps, any> {
-
   constructor(props) {
     super(props);
   }
@@ -37,7 +36,7 @@ class Login extends Component<IProps, any> {
   };
 
   render() {
-    const { form, loading ,dispatch} = this.props;
+    const { form, loading, dispatch } = this.props;
     const { getFieldDecorator } = form;
 
     return (
@@ -76,12 +75,17 @@ class Login extends Component<IProps, any> {
           </FormItem>
 
           <FormItem>
-            <span className="pull-right color-primary pointer" onClick={()=>{dispatch(routerRedux.push("/user/register"))}}>
+            <span
+              className="pull-right color-primary pointer"
+              onClick={() => {
+                dispatch(routerRedux.push("/user/register"));
+              }}
+            >
               没有账号？注册
             </span>
             <Button
               size="large"
-              loading={loading['user/login']}
+              loading={loading["user/login"]}
               className="wp100"
               type="primary"
               htmlType="submit"
@@ -96,34 +100,17 @@ class Login extends Component<IProps, any> {
 }
 
 const WrappedNormalLoginForm = Form.create()(Login);
-export default connect(state => ({
-  user: state.user,
-  loading: state.loading.effects
-}))(WrappedNormalLoginForm);
-
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    user: state.user,
+    loading: state.loading.effects
+  };
+}
+export default connect(mapStateToProps)(WrappedNormalLoginForm);
 
 // export default connect(state => ({
-//   user: state.user
-// }))(
-//   Form.create<IProps>({
-//     onFieldsChange(props, changedFields) {
-//       props.dispatch({
-//         type: "user/save",
-//         payload: changedFields
-//       });
-//     },
-//     mapPropsToFields(props) {
-//       const { user } = props;
-//       return {
-//         username: Form.createFormField({
-//           ...user.loginData.username,
-//           value: user.loginData.username.value
-//         }),
-//         password: Form.createFormField({
-//           ...user.loginData.password,
-//           value: user.loginData.password.value
-//         })
-//       };
-//     }
-//   })(Login)
-// );
+//   list: state.list,
+//   user: state.user,
+//   loading: state.loading.effects
+// }))(WrappedNormalLoginForm);

@@ -15,27 +15,26 @@ export default function(app) {
     component: () => import("LAYOUTS/UserLayout/UserLayout")
   } as any) as any;
 
-  const IndexPage = dynamic({
-    app,
-    component: () => import("ROUTES/IndexPage/IndexPage")
-  } as any) as any;
-
-  const TableList = dynamic({
-    app,
-    models: () => [import("MODELS/list")],
-    component: () => import("ROUTES/List/TableList")
-  } as any) as any;
-
   const Register = dynamic({
     app,
-    component: () => import("ROUTES/Register/Register"),
+    component: () => import("VIEW/Register/Register"),
     models: () => [import("MODELS/user")]
   } as any) as any;
 
   const Login = dynamic({
     app,
-    component: () => import("ROUTES/Login/Login"),
+    component: () => import("VIEW/Login/Login"),
     models: () => [import("MODELS/user")]
+  } as any) as any;
+
+  const IndexPage = dynamic({
+    app,
+    component: () => import("VIEW/IndexPage/IndexPage")
+  } as any) as any;
+
+  const Introduce = dynamic({
+    app,
+    component: () => import("VIEW/Introduce/Index")
   } as any) as any;
 
   return function({ history }) {
@@ -44,7 +43,7 @@ export default function(app) {
         <Switch>
           <BasicLayout path="/base">
             <Route path="/base/index" exact={true} component={IndexPage} />
-            <Route path="/base/list" exact={true} component={TableList} />
+            <Route path="/base/introduce" exact={true} component={Introduce} />
           </BasicLayout>
           <UserLayout path="/user">
             <Route path="/user/register" exact={true} component={Register} />

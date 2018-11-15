@@ -4,9 +4,8 @@ import { connect } from "dva";
 import { Link, Redirect, Route, Switch, routerRedux } from "dva/router";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
-import { getNavData } from "COMMON/nav";
+import navList from "COMMON/nav";
 import styles from "./BasicLayout.less";
-import classnames from "classnames";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -33,145 +32,105 @@ const query = {
 };
 
 interface IProps {
-  dispatch?: any;
-  currentUser?: any;
-  collapsed?: any;
-  fetchingNotices?: any;
   location?: any;
-  notices?: any;
+  dispatch?: any;
+  collapsed?: any;
+  user: {
+    navList: [];
+  };
+  path?: any;
 }
 
 interface IState {
   openKeys?: any;
+  selectedKeys?: any;
 }
 
 @connect(state => ({
-  collapsed: state.global.collapsed
+  collapsed: state.global.collapsed,
+  user: state.user
 }))
 export default class BasicLayout extends React.PureComponent<IProps, IState> {
-  public menus: any;
-
   constructor(props) {
     super(props);
-    this.menus = getNavData().reduce(
-      (arr, current) => arr.concat(current.children),
-      []
-    );
     this.state = {
-      openKeys: this.getDefaultCollapsedSubMenus(props)
+      selectedKeys: this.setSelectedKeys()
     };
   }
-
-  // 折叠
-  public onCollapse = collapsed => {
+  setSelectedKeys() {
+    let { location } = this.props;
+    return [location.pathname];
+  }
+  getDefaultOpenKeys(): Array<string> {
+    let { path } = this.props;
+    return [path];
+  }
+  //点击链接的item
+  clickItem({ keyPath }) {
+    this.setState({
+      selectedKeys: keyPath
+    });
+  }
+  // 响应式触发折叠
+  onCollapse(collapsed) {
     this.props.dispatch({
       type: "global/changeLayoutCollapsed",
       payload: collapsed
     });
-  };
+  }
 
-  public getCurrentMenuSelectedKeys = (props?) => {
-    const {
-      location: { pathname }
-    } = props || this.props;
-    const keys = pathname.split("/").slice(1);
-    if (keys.length === 1 && keys[0] === "") {
-      return [this.menus[0].key];
-    }
-    return keys;
-  };
-
-  public getDefaultCollapsedSubMenus = props => {
-    const currentMenuSelectedKeys = [...this.getCurrentMenuSelectedKeys(props)];
-    currentMenuSelectedKeys.splice(-1, 1);
-    if (currentMenuSelectedKeys.length === 0) {
-      return ["dashboard"];
-    }
-    return currentMenuSelectedKeys;
-  };
-
-  public handleOpenChange = openKeys => {
-    const lastOpenKey = openKeys[openKeys.length - 1];
-    const isMainMenu = this.menus.some(
-      item => item.key === lastOpenKey || item.path === lastOpenKey
-    );
-    this.setState({
-      openKeys: isMainMenu ? [lastOpenKey] : [...openKeys]
-    });
-  };
-
-  //生成侧栏菜单的函数
-  public getNavMenuItems = (menusData, parentPath = "") => {
-    const { location } = this.props;
-    if (!menusData) {
-      return [];
-    }
-    return menusData.map(item => {
-      if (!item.name) {
-        return null;
-      }
-      let itemPath;
-      item.path.indexOf("http") === 0
-        ? (itemPath = item.path)
-        : (itemPath = `${parentPath}/${item.path || ""}`.replace(/\/+/g, "/"));
-
-      if (item.children && item.children.some(child => child.name)) {
-        return (
-          <SubMenu
-            title={
-              item.icon ? (
-                <span>
-                  <Icon type={item.icon} />
-                  <span>{item.name}</span>
-                </span>
-              ) : (
-                item.name
-              )
-            }
-            key={item.key || item.path}
-          >
-            {this.getNavMenuItems(item.children, itemPath)}
-          </SubMenu>
-        );
-      }
-
-      return (
-        <Menu.Item key={item.key || item.path}>
-          {/^https?:\/\//.test(itemPath) ? (
-            <a href={itemPath} target={item.target}>
-              <span>{item.name}</span>
-            </a>
-          ) : (
-            <Link
-              to={itemPath}
-              target={item.target}
-              replace={itemPath === location.pathname}
-            >
-              <Icon type="home" />
-              <span>{item.name}</span>
-            </Link>
-          )}
-        </Menu.Item>
-      );
-    });
-  };
-
-  public toggle = () => {
+  //点击折叠函数
+  switchCollapsed() {
     const { collapsed } = this.props;
     this.props.dispatch({
       type: "global/changeLayoutCollapsed",
       payload: !collapsed
     });
-  };
+  }
 
-  public render() {
+  //获取侧栏菜单
+  getNavMenuItems(navList) {
+    return navList.map(item => {
+      if (item.children) {
+        return (
+          <SubMenu
+            key={item.path}
+            title={
+              <span>
+                <Icon type={item.icon} />
+                <span>{item.name}</span>
+              </span>
+            }
+          >
+            {this.getNavMenuItems(item.children)}
+          </SubMenu>
+        );
+      } else {
+        return (
+          <Menu.Item key={item.path}>
+            {/^https?:\/\//.test(item.path) ? (
+              <a href={item.path} target={item.target}>
+                <Icon type={item.icon} />
+                <span>{item.name}</span>
+              </a>
+            ) : (
+              <Link
+                to={item.path}
+                target={item.target}
+                replace={item.path === location.pathname}
+              >
+                <Icon type={item.icon} />
+                <span>{item.name}</span>
+              </Link>
+            )}
+          </Menu.Item>
+        );
+      }
+    });
+  }
+
+  render() {
     const { collapsed } = this.props;
-
-    const menuProps = collapsed
-      ? {}
-      : {
-          openKeys: this.state.openKeys
-        };
     const layout = (
       <Layout>
         <Sider
@@ -179,8 +138,8 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
           collapsible={true}
           collapsed={collapsed}
           breakpoint="md"
-          onCollapse={this.onCollapse}
           width={256}
+          onCollapse={this.onCollapse.bind(this)}
           className={styles.sider}
         >
           <div className={styles.logo}>
@@ -190,12 +149,11 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
           <Menu
             theme={"dark"}
             mode={"inline"}
-            {...menuProps}
-            onOpenChange={this.handleOpenChange}
-            selectedKeys={this.getCurrentMenuSelectedKeys()}
-            style={{ margin: "16px 0", width: "100%" }}
+            onClick={this.clickItem.bind(this)}
+            defaultOpenKeys={this.getDefaultOpenKeys()}
+            selectedKeys={this.state.selectedKeys}
           >
-            {this.getNavMenuItems(this.menus)}
+            {this.getNavMenuItems(navList)}
           </Menu>
         </Sider>
         <Layout
@@ -204,14 +162,18 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             ml80: collapsed
           })}
         >
-          <Header className={styles.header}>
+          <Header
+            className={classNames({
+              [styles.ml256]: !collapsed,
+              ml80: collapsed,
+              [styles.header]: true
+            })}
+          >
             <Icon
               className={styles.trigger}
               type={collapsed ? "menu-unfold" : "menu-fold"}
-              onClick={this.toggle}
+              onClick={this.switchCollapsed.bind(this)}
             />
-
-            <Divider dashed={true} type="vertical" style={{ height: "50px" }} />
             <Button
               className="pull-right mt15"
               onClick={() => {

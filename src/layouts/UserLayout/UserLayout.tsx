@@ -5,8 +5,11 @@ import React from "react";
 import styles from "./UserLayout.less";
 
 class UserLayout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    console.log("userlayout");
+  }
   public render() {
-    // console.log(getRouteData("UserLayout"))
     return (
       <div className={styles.container}>
         <div>
