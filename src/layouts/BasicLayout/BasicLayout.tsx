@@ -6,7 +6,7 @@ import React from "react";
 import { ContainerQuery } from "react-container-query";
 import { getNavData } from "COMMON/nav";
 import styles from "./BasicLayout.less";
-import classnames from 'classnames';
+import classnames from "classnames";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -165,7 +165,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   };
 
   public render() {
-
     const { collapsed } = this.props;
 
     const menuProps = collapsed
@@ -199,7 +198,12 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             {this.getNavMenuItems(this.menus)}
           </Menu>
         </Sider>
-        <Layout className={classNames({[styles.ml256]: !collapsed,'ml80': collapsed})}>
+        <Layout
+          className={classNames({
+            [styles.ml256]: !collapsed,
+            ml80: collapsed
+          })}
+        >
           <Header className={styles.header}>
             <Icon
               className={styles.trigger}
@@ -222,7 +226,13 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               退出
             </Button>
           </Header>
-          <Content style={{ margin: "24px 24px 0",overflow: 'initial' }}>
+          <Content
+            style={{
+              margin: "24px 24px 0",
+              overflow: "initial",
+              marginTop: "64px"
+            }}
+          >
             {this.props.children}
           </Content>
         </Layout>

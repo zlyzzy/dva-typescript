@@ -1,57 +1,44 @@
-import { Route, Switch, Router,Redirect } from "dva/router";
+import { Route, Switch, Router, Redirect } from "dva/router";
 import React from "react";
-import dynamic from 'dva/dynamic';
+import dynamic from "dva/dynamic";
 
-export default function (app) {
+export default function(app) {
   const BasicLayout = dynamic({
     app,
-    component: () => import('LAYOUTS/BasicLayout/BasicLayout'),
-    models: () => [
-      import('MODELS/global'),
-    ],
+    component: () => import("LAYOUTS/BasicLayout/BasicLayout"),
+    models: () => [import("MODELS/global")]
   } as any) as any;
 
   const UserLayout = dynamic({
     app,
-    models: () => [
-      import('MODELS/global'),
-    ],
-    component: () => import('LAYOUTS/UserLayout/UserLayout')
+    models: () => [import("MODELS/global")],
+    component: () => import("LAYOUTS/UserLayout/UserLayout")
   } as any) as any;
 
   const IndexPage = dynamic({
     app,
-    component: () => import('ROUTES/IndexPage/IndexPage')
+    component: () => import("ROUTES/IndexPage/IndexPage")
   } as any) as any;
 
   const TableList = dynamic({
     app,
-    models: () => [
-      import('MODELS/list'),
-    ],
-    component: () => import('ROUTES/List/TableList')
+    models: () => [import("MODELS/list")],
+    component: () => import("ROUTES/List/TableList")
   } as any) as any;
-
 
   const Register = dynamic({
     app,
-    component: () => import('ROUTES/Register/Register'),
-    models: () => [
-      import('MODELS/user'),
-    ],
+    component: () => import("ROUTES/Register/Register"),
+    models: () => [import("MODELS/user")]
   } as any) as any;
-
 
   const Login = dynamic({
     app,
-    component: () => import('ROUTES/Login/Login'),
-    models: () => [
-      import('MODELS/user'),
-    ],
+    component: () => import("ROUTES/Login/Login"),
+    models: () => [import("MODELS/user")]
   } as any) as any;
 
-
-  return function ({ history }) {
+  return function({ history }) {
     return (
       <Router history={history}>
         <Switch>
@@ -63,9 +50,9 @@ export default function (app) {
             <Route path="/user/register" exact={true} component={Register} />
             <Route path="/user/login" exact={true} component={Login} />
           </UserLayout>
-          <Redirect path="/" to={{pathname: '/user/login'}} />
+          <Redirect path="/" to={{ pathname: "/user/login" }} />
         </Switch>
       </Router>
     );
-  }
+  };
 }

@@ -4,7 +4,13 @@
   padding: 0 12px 0 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  position: relative;
+  // position: relative;
+
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+
+  // style={{ position: 'fixed', zIndex: 1, width: '100%' }}
 }
 
 .logo {
@@ -95,6 +101,10 @@
 :global {
   .ant-layout {
     overflow-x: hidden;
+    min-height: 100%;
+  }
+  #root > div {
+    height: 100%;
   }
 }
 
@@ -106,19 +116,13 @@
     width: 160px;
   }
 }
-.ml256{
+.ml256 {
   margin-left: 256px;
 }
-
 .sider {
-  // min-height: 100vh;
-  // box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-  // position: relative;
-  // z-index: 10;
-
   overflow-y: auto;
-  height: 100vh;
-  position: fixed; 
+  height: 100%;
+  position: fixed;
   left: 0;
   top: 0px;
 }

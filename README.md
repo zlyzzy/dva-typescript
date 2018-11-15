@@ -57,4 +57,5 @@ npm install
 4. [lodash](https://www.npmjs.com/package/lodash)
 5. query-string
 再也无法从 React Router v4 中获取 URL 的查询字符串了，所以我们使用的是 query-string来处理。
+6. [classnames](https://www.npmjs.com/package/classnames)
 
