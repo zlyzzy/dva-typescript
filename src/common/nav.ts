@@ -8,13 +8,14 @@ const data = [
   {
     name: "公司相关",
     icon: "message",
-    path: "/base",
+    path: "/base/company",
     id: 3,
     children: [
       {
         name: "公司介绍",
         icon: "smile",
-        path: "/base/introduce",
+        path: "/base/company/introduce",
+        parentPath: "/base/company",
         id: 4
       }
     ]

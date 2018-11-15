@@ -1,11 +1,11 @@
 import { Divider, Icon, Layout, Menu, Button } from "antd";
 import classNames from "classnames";
 import { connect } from "dva";
-import { Link, Redirect, Route, Switch, routerRedux } from "dva/router";
+import { Link, routerRedux } from "dva/router";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
-import navList from "COMMON/nav";
 import styles from "./BasicLayout.less";
+import { getStorage } from "UTILS/utils";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -35,32 +35,35 @@ interface IProps {
   location?: any;
   dispatch?: any;
   collapsed?: any;
-  user: {
-    navList: [];
-  };
   path?: any;
+  navList: Array<Object>;
 }
-
 interface IState {
   openKeys?: any;
   selectedKeys?: any;
 }
-
 @connect(state => ({
   collapsed: state.global.collapsed,
-  user: state.user
+  navList: state.global.navList
 }))
 export default class BasicLayout extends React.PureComponent<IProps, IState> {
   constructor(props) {
     super(props);
+    console.log("basiclayout渲染");
+    this.props.dispatch({
+      type: "global/saveNavList",
+      payload: JSON.parse(getStorage("navList"))
+    });
     this.state = {
       selectedKeys: this.setSelectedKeys()
     };
   }
-  setSelectedKeys() {
+  //设置选中的菜单
+  setSelectedKeys(): Array<string> {
     let { location } = this.props;
     return [location.pathname];
   }
+  //设置默认展开项
   getDefaultOpenKeys(): Array<string> {
     let { path } = this.props;
     return [path];
@@ -153,7 +156,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             defaultOpenKeys={this.getDefaultOpenKeys()}
             selectedKeys={this.state.selectedKeys}
           >
-            {this.getNavMenuItems(navList)}
+            {this.getNavMenuItems(this.props.navList)}
           </Menu>
         </Sider>
         <Layout

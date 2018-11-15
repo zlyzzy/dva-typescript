@@ -3,6 +3,7 @@ import { Model } from "dva";
 import { register, login, department } from "SERVICES/user";
 import { message } from "antd";
 import navList from "COMMON/nav";
+import * as utils from "UTILS/utils";
 
 export default {
   namespace: "user",
@@ -11,8 +12,7 @@ export default {
       username: "",
       password: ""
     },
-    departmentList: [],
-    navList: []
+    departmentList: []
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -36,9 +36,9 @@ export default {
           type: "save",
           payload: payload
         });
-        yield put({
-          type: "saveNavList",
-          payload: navList
+        utils.setStorage({
+          name: "navList",
+          value: JSON.stringify(navList)
         });
         yield put(routerRedux.push("/base/index"));
       }
@@ -60,12 +60,6 @@ export default {
     }
   },
   reducers: {
-    saveNavList(state, { payload }) {
-      return {
-        ...state,
-        navList: payload
-      };
-    },
     saveDepartmentList(state, { payload }) {
       return {
         ...state,

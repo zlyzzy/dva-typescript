@@ -1,13 +1,12 @@
 import { Icon } from "antd";
 import { Link, Route } from "dva/router";
 import React from "react";
-// import { getRouteData } from "UTILS/utils";
 import styles from "./UserLayout.less";
 
 class UserLayout extends React.PureComponent {
   constructor(props) {
     super(props);
-    console.log("userlayout");
+    console.log("userlayout渲染");
   }
   public render() {
     return (

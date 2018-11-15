@@ -43,7 +43,11 @@ export default function(app) {
         <Switch>
           <BasicLayout path="/base">
             <Route path="/base/index" exact={true} component={IndexPage} />
-            <Route path="/base/introduce" exact={true} component={Introduce} />
+            <Route
+              path="/base/company/introduce"
+              exact={true}
+              component={Introduce}
+            />
           </BasicLayout>
           <UserLayout path="/user">
             <Route path="/user/register" exact={true} component={Register} />
