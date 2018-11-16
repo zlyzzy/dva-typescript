@@ -2,7 +2,7 @@ import "@babel/polyfill";
 import dva from "dva";
 import createLoading from "dva-loading";
 import "ASSETS/style/index.less";
-import routerFn from "ROUTER/router";
+import routerFn from "./router";
 
 // 1. Initialize
 const app = dva();

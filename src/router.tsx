@@ -37,6 +37,11 @@ export default function(app) {
     component: () => import("VIEW/Introduce/Index")
   } as any) as any;
 
+  const NoMatch = dynamic({
+    app,
+    component: () => import("VIEW/NotFound/Index")
+  } as any) as any;
+
   return function({ history }) {
     return (
       <Router history={history}>
@@ -53,7 +58,9 @@ export default function(app) {
             <Route path="/user/register" exact={true} component={Register} />
             <Route path="/user/login" exact={true} component={Login} />
           </UserLayout>
-          <Redirect path="/" to={{ pathname: "/user/login" }} />
+
+          <Redirect path="/" exact={true} to={{ pathname: "/user/login" }} />
+          <Route component={NoMatch} />
         </Switch>
       </Router>
     );
