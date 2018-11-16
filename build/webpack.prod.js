@@ -1,6 +1,5 @@
 
 const path = require('path');
-const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.base.js');
@@ -19,9 +18,6 @@ module.exports = function (env) {
       filename: 'assets/js/[name][hash].js',
     },
     plugins: [
-      new webpack.LoaderOptionsPlugin({
-        minimize: true,
-      }),
       //清除dist
       new CleanWebpackPlugin([targetFolder], {
         root: `${targetPath}`,
