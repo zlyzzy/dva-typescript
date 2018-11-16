@@ -1,6 +1,20 @@
 ####安装
 ```
 npm install 
+```
+
+####指令
+
+```
+dev: 启动
+
+build: 打包
+
+tslint:fix 可以自动修复一部分代码
+
+styleint 可以检测过不合格的style
+
+prettier 可以格化式代码
 
 ```
 ####项目依赖文件介绍
