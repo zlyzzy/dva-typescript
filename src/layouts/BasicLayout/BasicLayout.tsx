@@ -5,7 +5,6 @@ import { Link, routerRedux } from "dva/router";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import styles from "./BasicLayout.less";
-import { getStorage } from "UTILS/utils";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -36,7 +35,7 @@ interface IProps {
   dispatch?: any;
   collapsed?: any;
   path?: any;
-  navList: Array<Object>;
+  departmentList: Array<Object>;
 }
 interface IState {
   openKeys?: any;
@@ -44,15 +43,14 @@ interface IState {
 }
 @connect(state => ({
   collapsed: state.global.collapsed,
-  navList: state.global.navList
+  departmentList: state.global.departmentList
 }))
 export default class BasicLayout extends React.PureComponent<IProps, IState> {
   constructor(props) {
     super(props);
-    console.log("basiclayout渲染");
     this.props.dispatch({
-      type: "global/saveNavList",
-      payload: JSON.parse(getStorage("navList"))
+      type: "global/getDepartmentList",
+      payload: {}
     });
     this.state = {
       selectedKeys: this.setSelectedKeys()
@@ -92,8 +90,8 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   }
 
   //获取侧栏菜单
-  getNavMenuItems(navList) {
-    return navList.map(item => {
+  getNavMenuItems(departmentList) {
+    return departmentList.map(item => {
       if (item.children) {
         return (
           <SubMenu
@@ -150,13 +148,14 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             <h1>导航系统</h1>
           </div>
           <Menu
+            className="mt10"
             theme={"dark"}
             mode={"inline"}
             onClick={this.clickItem.bind(this)}
             defaultOpenKeys={this.getDefaultOpenKeys()}
             selectedKeys={this.state.selectedKeys}
           >
-            {this.getNavMenuItems(this.props.navList)}
+            {this.getNavMenuItems(this.props.departmentList)}
           </Menu>
         </Sider>
         <Layout
@@ -177,7 +176,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               type={collapsed ? "menu-unfold" : "menu-fold"}
               onClick={this.switchCollapsed.bind(this)}
             />
-            <Button
+            {/* <Button
               className="pull-right mt15"
               onClick={() => {
                 this.props.dispatch(
@@ -189,7 +188,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               }}
             >
               退出
-            </Button>
+            </Button> */}
           </Header>
           <Content
             style={{

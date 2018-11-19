@@ -15,12 +15,6 @@ export default function(app) {
     component: () => import("LAYOUTS/UserLayout/UserLayout")
   } as any) as any;
 
-  const Register = dynamic({
-    app,
-    component: () => import("VIEW/Register/Register"),
-    models: () => [import("MODELS/user")]
-  } as any) as any;
-
   const Login = dynamic({
     app,
     component: () => import("VIEW/Login/Login"),
@@ -55,11 +49,10 @@ export default function(app) {
             />
           </BasicLayout>
           <UserLayout path="/user">
-            <Route path="/user/register" exact={true} component={Register} />
             <Route path="/user/login" exact={true} component={Login} />
           </UserLayout>
 
-          <Redirect path="/" exact={true} to={{ pathname: "/user/login" }} />
+          <Redirect path="/" exact={true} to={{ pathname: "/base/index" }} />
           <Route component={NoMatch} />
         </Switch>
       </Router>

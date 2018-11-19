@@ -1,17 +1,28 @@
 import { Model } from "dva";
+import { department } from "SERVICES/user";
 
 export default {
   namespace: "global",
   state: {
     collapsed: false, //全局折叠
-    navList: [] //菜单存储
+    departmentList: [] //菜单存储
   },
-  effects: {},
+  effects: {
+    *getDepartmentList({}, { call, put }) {
+      const { result, success } = yield call(department);
+      if (success) {
+        yield put({
+          type: "saveDepartmentList",
+          payload: result
+        });
+      }
+    }
+  },
   reducers: {
-    saveNavList(state, { payload }) {
+    saveDepartmentList(state, { payload }) {
       return {
         ...state,
-        navList: payload
+        departmentList: payload
       };
     },
     changeLayoutCollapsed(state, { payload }) {

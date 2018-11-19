@@ -24,10 +24,13 @@ module.exports = function (env) {
       compress: true,
       port: 8000,
       proxy: {
-        '/api/*': {
-          target: 'http://localhost:9090',
+        '/api': {
+          target: 'http://localhost:7001/',
           secure: false,
           changeOrigin: true,
+          pathRewrite: {
+            '^/api': ''
+          }
         },
       },
     },
