@@ -59,12 +59,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   //设置选中的菜单
   setSelectedKeys(): Array<string> {
     let { location } = this.props;
-    return [location.pathname];
-  }
-  //设置默认展开项
-  getDefaultOpenKeys(): Array<string> {
-    let { path } = this.props;
-    return [path];
+    return [`${location.pathname}${location.search}`];
   }
   //点击链接的item
   clickItem({ keyPath }) {
@@ -152,7 +147,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             theme={"dark"}
             mode={"inline"}
             onClick={this.clickItem.bind(this)}
-            defaultOpenKeys={this.getDefaultOpenKeys()}
             selectedKeys={this.state.selectedKeys}
           >
             {this.getNavMenuItems(this.props.departmentList)}
@@ -194,7 +188,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
             style={{
               margin: "24px 24px 0",
               overflow: "initial",
-              marginTop: "64px"
+              marginTop: "84px"
             }}
           >
             {this.props.children}
@@ -202,7 +196,6 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
         </Layout>
       </Layout>
     );
-
     return (
       <ContainerQuery query={query}>
         {params => <div className={classNames(params)}>{layout}</div>}

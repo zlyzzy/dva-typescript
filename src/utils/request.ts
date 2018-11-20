@@ -27,20 +27,6 @@ let xhr = ({ url, body, method, contentType }) => {
   return new Promise((resolve, reject) => {
     axios(requestConfig)
       .then(res => {
-        //code = 10000 表示成功
-        //code = 60001 没有访问权限
-        //code = 50003 密码错误
-        //code = 50002 登录名错误
-        //code = 50001 用户未登录
-        // if (res.data.code && res.data.code == 50001) {
-        //   utils.storageClear();
-        //   window.location.href = window.location.origin + window.location.pathname + "#/user/login";
-        //   return false;
-        // }
-        // if (res.data.code && res.data.code != 10000) {
-        //   message.error(res.statusText);
-        //   return resolve({success: false, ...res.data})
-        // }
         return resolve({
           ...res.data
         });

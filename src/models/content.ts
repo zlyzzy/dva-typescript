@@ -1,15 +1,12 @@
 import { routerRedux } from "dva/router";
 import { Model } from "dva";
-import { login } from "SERVICES/user";
+import { getDepartmentContent } from "SERVICES/user";
 import { message } from "antd";
 
 export default {
-  namespace: "user",
+  namespace: "content",
   state: {
-    loginData: {
-      username: "",
-      password: ""
-    }
+    departmentContentList: []
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -21,25 +18,21 @@ export default {
     }
   },
   effects: {
-    *login({ payload }, { call, put }) {
-      const { success } = yield call(login, payload);
+    *getDepartmentContent({ payload }, { call, put }) {
+      const { result, success } = yield call(getDepartmentContent, payload);
       if (success) {
         yield put({
-          type: "save",
-          payload: payload
+          type: "saveDepartmentContent",
+          payload: result
         });
-        yield put(routerRedux.push("/base/index"));
       }
     }
   },
   reducers: {
-    save(state, { payload }) {
+    saveDepartmentContent(state, { payload }) {
       return {
         ...state,
-        loginData: {
-          ...state.loginData,
-          ...payload
-        }
+        departmentContentList: payload
       };
     }
   }

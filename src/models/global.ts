@@ -22,7 +22,15 @@ export default {
     saveDepartmentList(state, { payload }) {
       return {
         ...state,
-        departmentList: payload
+        departmentList: [
+          {
+            name: "首页",
+            path: "/base/index",
+            code: "0",
+            icon: "home"
+          },
+          ...payload
+        ]
       };
     },
     changeLayoutCollapsed(state, { payload }) {

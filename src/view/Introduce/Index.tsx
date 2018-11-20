@@ -17,5 +17,4 @@ class Introduce extends Component<IProps, any> {
     return <div>公司介绍页面</div>;
   }
 }
-
 export default connect()(Introduce);
