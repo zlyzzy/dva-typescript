@@ -135,7 +135,9 @@ class JumpLink extends Component<IProps, IState> {
           title="新增应用链接"
           cancelText="取消"
           centered={true}
+          onCancel={this.handleCancel}
           visible={this.state.addVisible}
+          maskClosable={false}
           footer={[
             <Button key="back" onClick={this.handleCancel}>
               取消
