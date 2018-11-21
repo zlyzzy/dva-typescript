@@ -36,6 +36,7 @@ interface IProps {
   collapsed?: any;
   path?: any;
   departmentList: Array<Object>;
+  currentDepartmentName: string;
 }
 interface IState {
   openKeys?: any;
@@ -43,15 +44,28 @@ interface IState {
 }
 @connect(state => ({
   collapsed: state.global.collapsed,
-  departmentList: state.global.departmentList
+  departmentList: state.global.departmentList,
+  currentDepartmentName: state.global.currentDepartmentName
 }))
 export default class BasicLayout extends React.PureComponent<IProps, IState> {
   constructor(props) {
     super(props);
-    this.props.dispatch({
-      type: "global/getDepartmentList",
-      payload: {}
-    });
+    this.props
+      .dispatch({
+        type: "global/getDepartmentList",
+        payload: {}
+      })
+      .then(res => {
+        //获取list之后 整理出map,然后获取当前map的内容
+        this.props.dispatch({
+          type: "global/saveDepartmentMap",
+          payload: this.props.departmentList
+        });
+        this.props.dispatch({
+          type: "global/saveCurrentDepartment",
+          payload: this.props.location.pathname
+        });
+      });
     this.state = {
       selectedKeys: this.setSelectedKeys()
     };
@@ -170,6 +184,9 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
               type={collapsed ? "menu-unfold" : "menu-fold"}
               onClick={this.switchCollapsed.bind(this)}
             />
+            <span className={styles.pageName}>
+              {this.props.currentDepartmentName}
+            </span>
             {/* <Button
               className="pull-right mt15"
               onClick={() => {

@@ -53,15 +53,17 @@ export default function(app) {
       <Router history={history}>
         <Switch>
           <BasicLayout path="/base">
-            <Route path="/base/index" exact={true} component={IndexPage} />
-            <Route path="/base/1" exact={true} component={Front} />
-            <Route path="/base/2" exact={true} component={Test} />
-
-            <Route
-              path="/base/company/introduce"
-              exact={true}
-              component={Introduce}
-            />
+            <Switch>
+              <Route path="/base/index" exact={true} component={IndexPage} />
+              <Route path="/base/1" exact={true} component={Front} />
+              <Route path="/base/2" exact={true} component={Test} />
+              <Route
+                path="/base/company/introduce"
+                exact={true}
+                component={Introduce}
+              />
+              <Route component={NoMatch} />
+            </Switch>
           </BasicLayout>
           <UserLayout path="/user">
             <Route path="/user/login" exact={true} component={Login} />

@@ -10,11 +10,12 @@ interface IdepartmentContentList {
   path: string; //地址
   image: string; //图片
   guidePath?: string; //注册使用指导链接
+  describtion?: string; //描述
 }
 interface IProps {
   dispatch?: any;
-  location?: any;
   departmentContentList: Array<IdepartmentContentList>;
+  currentDepartmentId: string;
 }
 interface IState {}
 class JumpLink extends Component<IProps, IState> {
@@ -23,7 +24,7 @@ class JumpLink extends Component<IProps, IState> {
     this.props.dispatch({
       type: "content/getDepartmentContent",
       payload: {
-        _id: queryString.parse(this.props.location.search).id
+        _id: this.props.currentDepartmentId
       }
     });
   }
@@ -32,35 +33,38 @@ class JumpLink extends Component<IProps, IState> {
       <div>
         {this.props.departmentContentList && (
           <div className="clearfloat">
-            {this.props.departmentContentList.map(link => (
-              <Card
-                title={link.name}
-                bordered={false}
-                className={styles.links}
-                key={link._id}
-              >
-                <a
-                  target="_blank"
-                  href={link.path}
-                  className="block"
-                  title={`前往${link.name}`}
+            {this.props.departmentContentList.map(link => {
+              let imagePath = link.image ? link.image : "empty.png";
+              return (
+                <Card
+                  title={link.name}
+                  bordered={false}
+                  className={styles.links}
+                  key={link._id}
                 >
-                  <img
-                    src={require("ASSETS/images/" + link.image)}
-                    className={styles.image}
-                  />
-                </a>
-                {link.guidePath && (
                   <a
-                    className="block mt10"
-                    href={link.guidePath}
                     target="_blank"
+                    href={link.path}
+                    className="block mb10 text-center"
+                    title={`前往${link.name}`}
                   >
-                    注册使用指导
+                    <img
+                      src={require("ASSETS/images/" + imagePath)}
+                      className={styles.image}
+                    />
                   </a>
-                )}
-              </Card>
-            ))}
+                  {link.guidePath && (
+                    <div>
+                      {" "}
+                      <a href={link.guidePath} target="_blank">
+                        注册使用指导
+                      </a>
+                    </div>
+                  )}
+                  {link.describtion && <div>说明：{link.describtion}</div>}
+                </Card>
+              );
+            })}
           </div>
         )}
       </div>
@@ -70,7 +74,8 @@ class JumpLink extends Component<IProps, IState> {
 
 function mapStateToProps(state) {
   return {
-    departmentContentList: state.content.departmentContentList
+    departmentContentList: state.content.departmentContentList,
+    currentDepartmentId: state.global.currentDepartmentId
   };
 }
 

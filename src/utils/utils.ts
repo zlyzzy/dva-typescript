@@ -1,7 +1,5 @@
-
-
 export function setStorage(obj) {
-  window.localStorage.setItem(obj.name, obj.value)
+  window.localStorage.setItem(obj.name, obj.value);
 }
 
 export function getStorage(key) {
@@ -15,4 +13,18 @@ export function deleteStorage(key) {
 /*清除所有本地信息*/
 export function storageClear() {
   window.localStorage.clear();
+}
+
+/*
+ * 判断object是否为空
+ * @param a
+ * @returns {boolean} true为非空，false为空
+ */
+export function isEmptyObject(obj) {
+  let j = false;
+  obj = typeof obj == "object" ? obj : JSON.parse(obj);
+  for (let item in obj) {
+    return !j;
+  }
+  return j;
 }
