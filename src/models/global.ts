@@ -48,6 +48,7 @@ export default {
         isEmptyObject(state.departmentMap) &&
         payload in state.departmentMap
       ) {
+        document.title = state.departmentMap[payload].name;
         return {
           ...state,
           currentDepartmentId: state.departmentMap[payload]._id,

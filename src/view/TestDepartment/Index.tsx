@@ -12,7 +12,6 @@ interface IState {}
 class Front extends Component<IProps, IState> {
   constructor(props) {
     super(props);
-    document.title = "测试部";
   }
   render() {
     return (
