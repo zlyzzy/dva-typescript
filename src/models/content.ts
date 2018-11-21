@@ -1,6 +1,9 @@
 import { routerRedux } from "dva/router";
 import { Model } from "dva";
-import { getDepartmentContent } from "SERVICES/user";
+import {
+  getDepartmentContent,
+  addDepartmentContent
+} from "SERVICES/department";
 import { message } from "antd";
 
 export default {
@@ -18,14 +21,33 @@ export default {
     }
   },
   effects: {
-    *getDepartmentContent({ payload }, { call, put }) {
-      const { result, success } = yield call(getDepartmentContent, payload);
+    *getDepartmentContent({ payload }, { call, put, select }) {
+      let currentDepartmentId = yield select(
+        state => state.global.currentDepartmentId
+      );
+      const { result, success } = yield call(getDepartmentContent, {
+        _id: currentDepartmentId
+      });
       if (success) {
         yield put({
           type: "saveDepartmentContent",
           payload: result
         });
       }
+    },
+    *addContent({ payload }, { call, put, select }) {
+      const { success } = yield call(addDepartmentContent, payload);
+      if (success) {
+        //添加成功之后 重新请求
+        message.success("添加成功");
+        yield put({
+          type: "getDepartmentContent",
+          payload: {}
+        });
+      } else {
+        message.success("添加失败");
+      }
+      return success;
     }
   },
   reducers: {

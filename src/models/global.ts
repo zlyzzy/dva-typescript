@@ -1,5 +1,5 @@
 import { Model } from "dva";
-import { department } from "SERVICES/user";
+import { department } from "SERVICES/department";
 import { isEmptyObject } from "UTILS/utils";
 
 export default {

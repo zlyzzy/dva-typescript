@@ -28,3 +28,7 @@ export function isEmptyObject(obj) {
   }
   return j;
 }
+
+export function validateLink(path) {
+  return /^https?:\/\//.test(path);
+}

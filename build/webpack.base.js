@@ -164,7 +164,8 @@ module.exports = {
       MODELS: path.resolve(__dirname, '../src/models'),
       SERVICES: path.resolve(__dirname, '../src/services'),
       UTILS: path.resolve(__dirname, '../src/utils'),
-      VIEW: path.resolve(__dirname, '../src/view')
+      VIEW: path.resolve(__dirname, '../src/view'),
+      INTERFACE: path.resolve(__dirname, '../src/interface'),
     },
   },
 };
