@@ -285,26 +285,13 @@ export default connect(mapStateToProps)(
   Form.create<IProps>({
     mapPropsToFields(props) {
       const { contentObj } = props;
-      return {
-        _id: Form.createFormField({
-          value: contentObj._id
-        }),
-        name: Form.createFormField({
-          value: contentObj.name
-        }),
-        path: Form.createFormField({
-          value: contentObj.path
-        }),
-        guidePath: Form.createFormField({
-          value: contentObj.guidePath
-        }),
-        describtion: Form.createFormField({
-          value: contentObj.describtion
-        }),
-        department: Form.createFormField({
-          value: contentObj.department
-        })
-      };
+      let obj = {};
+      for (let i in contentObj) {
+        obj[i] = Form.createFormField({
+          value: contentObj[i]
+        });
+      }
+      return obj;
     }
   })(JumpLink)
 );
