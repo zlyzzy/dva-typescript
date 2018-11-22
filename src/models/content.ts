@@ -29,16 +29,31 @@ export default {
           type: "getDepartmentContent",
           payload: getDepartmentId(pathname)
         });
+        //这是因为页面切换的时候，上个页面的state 并没有被我清除，在此处做清除
+        dispatch({
+          type: "saveContentObj",
+          payload: {
+            _id: "",
+            name: "",
+            path: "",
+            guidePath: "",
+            describtion: "",
+            department: []
+          }
+        });
       });
     }
   },
   effects: {
     *getDepartmentContent({ payload }, { call, put, select }) {
-      let currentDepartmentId = yield select(
-        state => state.global.currentDepartmentId
-      ) || payload;
+      let currentDepartmentCode = yield select(
+        state => state.global.currentDepartmentCode
+      );
+      if (!currentDepartmentCode) {
+        currentDepartmentCode = payload;
+      }
       const { result, success } = yield call(getDepartmentContent, {
-        _id: currentDepartmentId
+        _id: currentDepartmentCode
       });
       if (success) {
         yield put({
@@ -50,6 +65,7 @@ export default {
       }
     },
     *addContent({ payload }, { call, put, select }) {
+      delete payload._id;
       const { success } = yield call(addDepartmentContent, payload);
       if (success) {
         //添加成功之后 重新请求

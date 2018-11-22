@@ -8,7 +8,7 @@ export default {
   state: {
     collapsed: false, //全局折叠
     departmentList: [], //菜单存储
-    currentDepartmentId: "", //当前点击的部门  用于JumpLink组件获取数据
+    currentDepartmentCode: "", //当前点击的部门  用于JumpLink组件获取数据
     currentDepartmentName: "", //当前点击部门的name 用于显示
     departmentMap: {}
   },
@@ -55,7 +55,7 @@ export default {
         document.title = state.departmentMap[payload].name;
         return {
           ...state,
-          currentDepartmentId: state.departmentMap[payload]._id,
+          currentDepartmentCode: state.departmentMap[payload].code,
           currentDepartmentName: state.departmentMap[payload].name
         };
       } else {

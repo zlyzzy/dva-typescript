@@ -33,7 +33,6 @@ class JumpLink extends Component<IProps, IState> {
   handleOk = e => {
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {
-        console.log(values);
         this.props
           .dispatch({
             type: values._id ? "content/updateContent" : "content/addContent",
@@ -249,12 +248,12 @@ class JumpLink extends Component<IProps, IState> {
                 <Select
                   mode="multiple"
                   style={{ width: "100%" }}
-                  placeholder="Please select"
+                  placeholder="请选择所属部门"
                 >
                   {this.props.departmentList.map(item => {
                     return (
                       item._id != "0" && (
-                        <Option value={item._id} key={item._id}>
+                        <Option value={item.code} key={item.code}>
                           {item.name}
                         </Option>
                       )
