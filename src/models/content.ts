@@ -1,5 +1,6 @@
 import { routerRedux } from "dva/router";
 import { Model } from "dva";
+import { getDepartmentId } from "UTILS/utils";
 import {
   getDepartmentContent,
   addDepartmentContent,
@@ -23,9 +24,11 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        if (pathname === "/user/login") {
-          // 做你想做的事情
-        }
+        //页面切换的时候 获取部门对应的列表
+        dispatch({
+          type: "getDepartmentContent",
+          payload: getDepartmentId(pathname)
+        });
       });
     }
   },
@@ -33,7 +36,7 @@ export default {
     *getDepartmentContent({ payload }, { call, put, select }) {
       let currentDepartmentId = yield select(
         state => state.global.currentDepartmentId
-      );
+      ) || payload;
       const { result, success } = yield call(getDepartmentContent, {
         _id: currentDepartmentId
       });

@@ -14,6 +14,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
+        //为了切换页面的时候页面名称切换
         dispatch({
           type: "saveCurrentDepartment",
           payload: pathname

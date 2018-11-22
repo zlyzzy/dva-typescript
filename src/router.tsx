@@ -39,13 +39,7 @@ export default function(app) {
   const Front = dynamic({
     app,
     models: () => [import("MODELS/content")],
-    component: () => import("VIEW/FrontDepartment/Index")
-  } as any) as any;
-
-  const Test = dynamic({
-    app,
-    models: () => [import("MODELS/content")],
-    component: () => import("VIEW/TestDepartment/Index")
+    component: () => import("VIEW/Department/Index")
   } as any) as any;
 
   return function({ history }) {
@@ -55,8 +49,11 @@ export default function(app) {
           <BasicLayout path="/base">
             <Switch>
               <Route path="/base/index" exact={true} component={IndexPage} />
-              <Route path="/base/1" exact={true} component={Front} />
-              <Route path="/base/2" exact={true} component={Test} />
+              <Route
+                path="/base/application/:bookId"
+                exact={true}
+                component={Front}
+              />
               <Route
                 path="/base/company/introduce"
                 exact={true}

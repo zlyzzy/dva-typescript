@@ -28,11 +28,6 @@ class JumpLink extends Component<IProps, IState> {
       addVisible: false,
       title: "新增应用"
     };
-    //获取内容
-    this.props.dispatch({
-      type: "content/getDepartmentContent",
-      payload: {}
-    });
   }
   //确定
   handleOk = e => {

@@ -32,3 +32,8 @@ export function isEmptyObject(obj) {
 export function validateLink(path) {
   return /^https?:\/\//.test(path);
 }
+
+export function getDepartmentId(pathname) {
+  let _arry = pathname.split("/");
+  return _arry[_arry.length - 1];
+}
