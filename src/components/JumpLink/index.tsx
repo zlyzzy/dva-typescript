@@ -82,7 +82,7 @@ class JumpLink extends Component<IProps, IState> {
         <span>{link.name}</span>
         <Icon
           type="edit"
-          className="pull-right pointer hover-primary"
+          className="pull-right pointer hover-primary color-9"
           onClick={() => {
             this.itemEdit(link);
           }}
