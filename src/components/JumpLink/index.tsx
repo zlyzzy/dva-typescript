@@ -26,7 +26,7 @@ class JumpLink extends Component<IProps, IState> {
     super(props);
     this.state = {
       addVisible: false,
-      title: "新增应用"
+      title: "新增平台"
     };
   }
   //确定
@@ -71,7 +71,7 @@ class JumpLink extends Component<IProps, IState> {
       payload: link
     });
     this.setState({
-      title: "编辑应用"
+      title: "编辑平台"
     });
     this.switchAddVisible(true);
   }
@@ -144,7 +144,7 @@ class JumpLink extends Component<IProps, IState> {
             })}
           </div>
         )}
-        <Tooltip placement="left" title="新增应用">
+        <Tooltip placement="left" title="新增平台">
           <Button
             type="primary"
             shape="circle"
@@ -154,7 +154,7 @@ class JumpLink extends Component<IProps, IState> {
             onClick={() => {
               this.switchAddVisible(true);
               this.setState({
-                title: "新增应用"
+                title: "新增平台"
               });
             }}
           />
