@@ -204,9 +204,9 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
           </Header>
           <Content
             style={{
-              margin: "24px 24px 0",
+              margin: "10px 10px 50px",
               overflow: "initial",
-              marginTop: "84px"
+              marginTop: "74px"
             }}
           >
             {this.props.children}

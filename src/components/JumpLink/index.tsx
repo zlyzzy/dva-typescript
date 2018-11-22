@@ -3,7 +3,7 @@ import styles from "./index.less";
 import { connect } from "dva";
 import React, { Component } from "react";
 import queryString from "query-string";
-import { Card, Icon, Button, Modal, Form, Input, Select } from "antd";
+import { Card, Icon, Button, Modal, Form, Input, Select, Tooltip } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import { validateLink } from "UTILS/utils";
 import { IdepartmentContentList, IdepartmentList } from "INTERFACE/department";
@@ -67,6 +67,15 @@ class JumpLink extends Component<IProps, IState> {
     callback();
   };
 
+  cardTitle = name => {
+    return (
+      <div>
+        <span>{name}</span>
+        <Icon type="edit" className="pull-right pointer hover-primary" />
+      </div>
+    );
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -84,7 +93,7 @@ class JumpLink extends Component<IProps, IState> {
             {this.props.departmentContentList.map(link => {
               return (
                 <Card
-                  title={link.name}
+                  title={this.cardTitle(link.name)}
                   bordered={false}
                   className={styles.links}
                   key={link._id}
@@ -118,19 +127,18 @@ class JumpLink extends Component<IProps, IState> {
                 </Card>
               );
             })}
-            <Card title="新增" bordered={false} className={styles.links}>
-              <div className="text-center">
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon="plus"
-                  onClick={this.showModal}
-                />
-              </div>
-            </Card>
           </div>
         )}
-
+        <Tooltip placement="left" title="新增应用">
+          <Button
+            type="primary"
+            shape="circle"
+            icon="plus"
+            size="large"
+            className={styles.addContent}
+            onClick={this.showModal}
+          />
+        </Tooltip>
         <Modal
           title="新增应用链接"
           cancelText="取消"
