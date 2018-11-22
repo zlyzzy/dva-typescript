@@ -6,12 +6,13 @@ import queryString from "query-string";
 import { Card, Icon, Button, Modal, Form, Input, Select, Tooltip } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import { validateLink } from "UTILS/utils";
-import { IdepartmentContentList, IdepartmentList } from "INTERFACE/department";
+import { IdepartmentContent, Idepartment } from "INTERFACE/department";
 
 interface IProps extends FormComponentProps {
   dispatch?: any;
-  departmentList: Array<IdepartmentList>;
-  departmentContentList: Array<IdepartmentContentList>;
+  departmentList: Array<Idepartment>;
+  departmentContentList: Array<IdepartmentContent>;
+  contentObj: IdepartmentContent;
 }
 interface IState {
   addVisible: boolean;
@@ -31,35 +32,35 @@ class JumpLink extends Component<IProps, IState> {
       payload: {}
     });
   }
-  showModal = () => {
-    this.setState({
-      addVisible: true
-    });
-  };
+  //确定
   handleOk = e => {
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {
+        console.log(values);
         this.props
           .dispatch({
-            type: "content/addContent",
+            type: values._id ? "content/updateContent" : "content/addContent",
             payload: values
           })
           .then(success => {
             if (success) {
-              this.setState({
-                addVisible: false
-              });
-              this.props.form.resetFields();
+              this.switchAddVisible(false);
             }
           });
       }
     });
   };
-  handleCancel = e => {
+
+  //弹框关闭开启
+  switchAddVisible(value) {
     this.setState({
-      addVisible: false
+      addVisible: value
     });
-  };
+    if (!value) {
+      this.props.form.resetFields();
+    }
+  }
+  //验证地址
   validatePath = (rule, value, callback) => {
     if (value && !validateLink(value)) {
       callback("必须以http(s)://开头");
@@ -67,11 +68,26 @@ class JumpLink extends Component<IProps, IState> {
     callback();
   };
 
-  cardTitle = name => {
+  //编辑
+  itemEdit(link) {
+    this.props.dispatch({
+      type: "content/saveContentObj",
+      payload: link
+    });
+    this.switchAddVisible(true);
+  }
+  //cardTitle渲染
+  cardTitle = link => {
     return (
       <div>
-        <span>{name}</span>
-        <Icon type="edit" className="pull-right pointer hover-primary" />
+        <span>{link.name}</span>
+        <Icon
+          type="edit"
+          className="pull-right pointer hover-primary"
+          onClick={() => {
+            this.itemEdit(link);
+          }}
+        />
       </div>
     );
   };
@@ -93,7 +109,7 @@ class JumpLink extends Component<IProps, IState> {
             {this.props.departmentContentList.map(link => {
               return (
                 <Card
-                  title={this.cardTitle(link.name)}
+                  title={this.cardTitle(link)}
                   bordered={false}
                   className={styles.links}
                   key={link._id}
@@ -136,18 +152,27 @@ class JumpLink extends Component<IProps, IState> {
             icon="plus"
             size="large"
             className={styles.addContent}
-            onClick={this.showModal}
+            onClick={() => {
+              this.switchAddVisible(true);
+            }}
           />
         </Tooltip>
         <Modal
           title="新增应用链接"
           cancelText="取消"
           centered={true}
-          onCancel={this.handleCancel}
+          onCancel={() => {
+            this.switchAddVisible(false);
+          }}
           visible={this.state.addVisible}
           maskClosable={false}
           footer={[
-            <Button key="back" onClick={this.handleCancel}>
+            <Button
+              key="back"
+              onClick={() => {
+                this.switchAddVisible(false);
+              }}
+            >
               取消
             </Button>,
             <Button key="submit" type="primary" onClick={this.handleOk}>
@@ -156,6 +181,9 @@ class JumpLink extends Component<IProps, IState> {
           ]}
         >
           <Form>
+            <FormItem label="应用名称" {...formItemLayout} className="none">
+              {getFieldDecorator("_id", {})(<span />)}
+            </FormItem>
             <FormItem label="应用名称" {...formItemLayout}>
               {getFieldDecorator("name", {
                 rules: [
@@ -237,7 +265,34 @@ class JumpLink extends Component<IProps, IState> {
 function mapStateToProps(state) {
   return {
     departmentContentList: state.content.departmentContentList,
-    departmentList: state.global.departmentList
+    departmentList: state.global.departmentList,
+    contentObj: state.content.contentObj
   };
 }
-export default connect(mapStateToProps)(Form.create()(JumpLink));
+export default connect(mapStateToProps)(
+  Form.create<IProps>({
+    mapPropsToFields(props) {
+      const { contentObj } = props;
+      return {
+        _id: Form.createFormField({
+          value: contentObj._id
+        }),
+        name: Form.createFormField({
+          value: contentObj.name
+        }),
+        path: Form.createFormField({
+          value: contentObj.path
+        }),
+        guidePath: Form.createFormField({
+          value: contentObj.guidePath
+        }),
+        describtion: Form.createFormField({
+          value: contentObj.describtion
+        }),
+        department: Form.createFormField({
+          value: contentObj.department
+        })
+      };
+    }
+  })(JumpLink)
+);

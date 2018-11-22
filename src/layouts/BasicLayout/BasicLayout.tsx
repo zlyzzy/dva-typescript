@@ -5,7 +5,7 @@ import { Link, routerRedux } from "dva/router";
 import React from "react";
 import { ContainerQuery } from "react-container-query";
 import styles from "./BasicLayout.less";
-import { IdepartmentList } from "INTERFACE/department";
+import { Idepartment } from "INTERFACE/department";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -36,7 +36,7 @@ interface IProps {
   dispatch?: any;
   collapsed?: any;
   path?: any;
-  departmentList: Array<IdepartmentList>;
+  departmentList: Array<Idepartment>;
   currentDepartmentName: string;
 }
 interface IState {

@@ -14,3 +14,12 @@ export const addDepartmentContent = param =>
     method: "post",
     contentType: "json"
   });
+
+//修改内容
+export const updateContent = param =>
+  fetch({
+    url: "department/updateContent",
+    params: param,
+    method: "post",
+    contentType: "json"
+  });

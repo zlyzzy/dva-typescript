@@ -32,7 +32,7 @@ let xhr = ({ url, body, method, contentType }) => {
         });
       })
       .catch(e => {
-        message.error("服务器请求失败");
+        // message.error("服务器请求失败");
         return resolve({
           result: null,
           success: false
