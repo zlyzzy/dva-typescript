@@ -1,6 +1,7 @@
 import { Model } from "dva";
 import { department } from "SERVICES/department";
 import { isEmptyObject } from "UTILS/utils";
+import { message } from "antd";
 
 export default {
   namespace: "global",
@@ -40,6 +41,8 @@ export default {
           type: "saveDepartmentList",
           payload: info
         });
+      } else {
+        message.error("获取部门列表失败");
       }
     }
   },

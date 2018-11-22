@@ -45,6 +45,8 @@ export default {
           type: "saveDepartmentContent",
           payload: result
         });
+      } else {
+        message.error("请求列表失败");
       }
     },
     *addContent({ payload }, { call, put, select }) {
@@ -57,7 +59,7 @@ export default {
           payload: {}
         });
       } else {
-        message.success("添加失败");
+        message.error("添加失败");
       }
       return success;
     },
@@ -71,7 +73,7 @@ export default {
           payload: {}
         });
       } else {
-        message.success("修改失败");
+        message.error("修改失败");
       }
       return success;
     }
