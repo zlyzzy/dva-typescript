@@ -16,6 +16,7 @@ interface IProps extends FormComponentProps {
 }
 interface IState {
   addVisible: boolean;
+  title: string;
 }
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -24,7 +25,8 @@ class JumpLink extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      addVisible: false
+      addVisible: false,
+      title: "新增应用"
     };
     //获取内容
     this.props.dispatch({
@@ -73,6 +75,9 @@ class JumpLink extends Component<IProps, IState> {
     this.props.dispatch({
       type: "content/saveContentObj",
       payload: link
+    });
+    this.setState({
+      title: "编辑应用"
     });
     this.switchAddVisible(true);
   }
@@ -154,11 +159,14 @@ class JumpLink extends Component<IProps, IState> {
             className={styles.addContent}
             onClick={() => {
               this.switchAddVisible(true);
+              this.setState({
+                title: "新增应用"
+              });
             }}
           />
         </Tooltip>
         <Modal
-          title="新增应用链接"
+          title={this.state.title}
           cancelText="取消"
           centered={true}
           onCancel={() => {
@@ -190,6 +198,10 @@ class JumpLink extends Component<IProps, IState> {
                   {
                     required: true,
                     message: "请输入应用名称"
+                  },
+                  {
+                    max: 10,
+                    message: "不能超过10个字"
                   }
                 ]
               })(<Input type="text" placeholder="应用名称" />)}
