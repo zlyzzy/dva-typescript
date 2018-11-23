@@ -49,6 +49,7 @@ export default function(app) {
           <BasicLayout path="/base">
             <Switch>
               <Route path="/base/index" exact={true} component={IndexPage} />
+              {/* 如果部门内容需要个性化一些东西 直接把路由写在上面即可*/}
               <Route
                 path="/base/application/:bookId"
                 exact={true}
