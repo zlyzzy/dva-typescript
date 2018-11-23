@@ -1,11 +1,11 @@
 import { message } from "antd";
 import { func } from "prop-types";
 import { duration } from "moment";
-export function setStorage(obj) {
+export function setStorage(obj): void {
   window.localStorage.setItem(obj.name, obj.value);
 }
 
-export function getStorage(key) {
+export function getStorage(key): string {
   return localStorage.getItem(key);
 }
 
