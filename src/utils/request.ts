@@ -1,4 +1,3 @@
-import { message } from "antd";
 import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs"; //处理post请求传参数问题 序列化参数
 import baseURL from "./url"; //url地址
@@ -32,7 +31,6 @@ let xhr = ({ url, body, method, contentType }) => {
         });
       })
       .catch(e => {
-        // message.error("服务器请求失败");
         return resolve({
           result: null,
           success: false

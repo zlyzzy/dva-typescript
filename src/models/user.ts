@@ -1,7 +1,6 @@
 import { routerRedux } from "dva/router";
 import { Model } from "dva";
 import { login } from "SERVICES/user";
-import { message } from "antd";
 
 export default {
   namespace: "user",

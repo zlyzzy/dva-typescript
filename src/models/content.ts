@@ -1,6 +1,5 @@
-import { routerRedux } from "dva/router";
 import { Model } from "dva";
-import { getDepartmentId } from "UTILS/utils";
+import { getDepartmentCode, alert, AlertType } from "UTILS/utils";
 import {
   getDepartmentContent,
   addDepartmentContent,
@@ -27,7 +26,7 @@ export default {
         //页面切换的时候 获取部门对应的列表
         dispatch({
           type: "getDepartmentContent",
-          payload: getDepartmentId(pathname)
+          payload: getDepartmentCode(pathname)
         });
         //这是因为页面切换的时候，上个页面的state 并没有被我清除，在此处做清除
         dispatch({
@@ -61,7 +60,7 @@ export default {
           payload: result
         });
       } else {
-        message.error("请求列表失败");
+        alert({ type: AlertType.error, content: "请求列表失败" });
       }
     },
     *addContent({ payload }, { call, put, select }) {
@@ -69,13 +68,13 @@ export default {
       const { success } = yield call(addDepartmentContent, payload);
       if (success) {
         //添加成功之后 重新请求
-        message.success("添加成功");
+        alert({ type: AlertType.success, content: "添加成功" });
         yield put({
           type: "getDepartmentContent",
           payload: {}
         });
       } else {
-        message.error("添加失败");
+        alert({ type: AlertType.error, content: "添加失败" });
       }
       return success;
     },
@@ -83,13 +82,13 @@ export default {
       const { success } = yield call(updateContent, payload);
       if (success) {
         //添加成功之后 重新请求
-        message.success("修改成功");
+        alert({ type: AlertType.success, content: "修改成功" });
         yield put({
           type: "getDepartmentContent",
           payload: {}
         });
       } else {
-        message.error("修改失败");
+        alert({ type: AlertType.error, content: "修改失败" });
       }
       return success;
     }
