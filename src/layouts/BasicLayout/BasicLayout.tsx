@@ -100,43 +100,23 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
   }
 
   //获取侧栏菜单
-  getNavMenuItems(departmentList) {
+  getNavMenuItems(departmentList: Array<Idepartment>) {
     return departmentList.map(item => {
-      if (item.children) {
-        return (
-          <SubMenu
-            key={item.path}
-            title={
-              <span>
-                <Icon type={item.icon} />
-                <span>{item.name}</span>
-              </span>
-            }
-          >
-            {this.getNavMenuItems(item.children)}
-          </SubMenu>
-        );
-      } else {
-        return (
-          <Menu.Item key={item.path}>
-            {/^https?:\/\//.test(item.path) ? (
-              <a href={item.path} target={item.target}>
-                <Icon type={item.icon} />
-                <span>{item.name}</span>
-              </a>
-            ) : (
-              <Link
-                to={item.path}
-                target={item.target}
-                replace={item.path === location.pathname}
-              >
-                <Icon type={item.icon} />
-                <span>{item.name}</span>
-              </Link>
-            )}
-          </Menu.Item>
-        );
-      }
+      return (
+        <Menu.Item key={item.path}>
+          {/^https?:\/\//.test(item.path) ? (
+            <a href={item.path} target="_blank">
+              <Icon type={item.icon} />
+              <span>{item.name}</span>
+            </a>
+          ) : (
+            <Link to={item.path} replace={item.path === location.pathname}>
+              <Icon type={item.icon} />
+              <span>{item.name}</span>
+            </Link>
+          )}
+        </Menu.Item>
+      );
     });
   }
 

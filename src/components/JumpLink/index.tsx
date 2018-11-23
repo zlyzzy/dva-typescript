@@ -48,7 +48,7 @@ class JumpLink extends Component<IProps, IState> {
   };
 
   //弹框关闭开启
-  switchAddVisible(value) {
+  switchAddVisible(value: boolean) {
     this.setState({
       addVisible: value
     });
@@ -65,7 +65,7 @@ class JumpLink extends Component<IProps, IState> {
   };
 
   //编辑
-  itemEdit(link) {
+  itemEdit(link: IdepartmentContent) {
     this.props.dispatch({
       type: "content/saveContentObj",
       payload: link
@@ -76,7 +76,7 @@ class JumpLink extends Component<IProps, IState> {
     this.switchAddVisible(true);
   }
   //cardTitle渲染
-  cardTitle = link => {
+  cardTitle = (link: IdepartmentContent) => {
     return (
       <div>
         <span>{link.name}</span>
@@ -105,43 +105,45 @@ class JumpLink extends Component<IProps, IState> {
       <div>
         {this.props.departmentContentList && (
           <div className="clearfloat">
-            {this.props.departmentContentList.map(link => {
-              return (
-                <Card
-                  title={this.cardTitle(link)}
-                  bordered={false}
-                  className={styles.links}
-                  key={link._id}
-                >
-                  <a
-                    target="_blank"
-                    href={link.path}
-                    className="mb15 block"
-                    title={`前往${link.name}`}
+            {this.props.departmentContentList.map(
+              (link: IdepartmentContent) => {
+                return (
+                  <Card
+                    title={this.cardTitle(link)}
+                    bordered={false}
+                    className={styles.links}
+                    key={link._id}
                   >
-                    <Button type="primary">
-                      {link.name}
-                      <Icon type="right" />
-                    </Button>
-                  </a>
-                  {link.guidePath && (
-                    <div>
-                      <span className="bold">指导：</span>
-                      <a href={link.guidePath} target="_blank">
-                        注册使用指导
-                        <Icon type="arrow-right" />
-                      </a>
-                    </div>
-                  )}
-                  {link.describtion && (
-                    <div>
-                      <span className="bold">说明：</span>
-                      {link.describtion}
-                    </div>
-                  )}
-                </Card>
-              );
-            })}
+                    <a
+                      target="_blank"
+                      href={link.path}
+                      className="mb15 block"
+                      title={`前往${link.name}`}
+                    >
+                      <Button type="primary">
+                        {link.name}
+                        <Icon type="right" />
+                      </Button>
+                    </a>
+                    {link.guidePath && (
+                      <div>
+                        <span className="bold">指导：</span>
+                        <a href={link.guidePath} target="_blank">
+                          注册使用指导
+                          <Icon type="arrow-right" />
+                        </a>
+                      </div>
+                    )}
+                    {link.describtion && (
+                      <div>
+                        <span className="bold">说明：</span>
+                        {link.describtion}
+                      </div>
+                    )}
+                  </Card>
+                );
+              }
+            )}
           </div>
         )}
         <Tooltip placement="left" title="新增平台">
