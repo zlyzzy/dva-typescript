@@ -20,6 +20,7 @@ module.exports = function (env) {
       hot: true,
       open: true,
       stats: 'normal',
+      host:'0.0.0.0',
       contentBase: './src/',
       compress: true,
       port: 8000,
