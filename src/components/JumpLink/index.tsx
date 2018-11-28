@@ -41,7 +41,7 @@ class JumpLink extends Component<IProps, IState> {
     };
   }
   //确定
-  handleOk = e => {
+  submitForm = e => {
     this.props.form.validateFields({ force: true }, (err, values) => {
       if (!err) {
         this.props
@@ -105,7 +105,7 @@ class JumpLink extends Component<IProps, IState> {
       <div>
         <span>{link.name}</span>
         <Popconfirm
-          placement="topLeft"
+          placement="bottom"
           title="确定要将这个平台从此部门删除吗？"
           onConfirm={e => {
             this.removeItem(e, link);
@@ -217,7 +217,7 @@ class JumpLink extends Component<IProps, IState> {
             >
               取消
             </Button>,
-            <Button key="submit" type="primary" onClick={this.handleOk}>
+            <Button key="submit" type="primary" onClick={this.submitForm}>
               确定
             </Button>
           ]}
