@@ -1,4 +1,5 @@
 import fetch from "UTILS/request";
+import { constants } from "fs";
 //获取部门列表
 export const department = () => fetch({ url: "department/list" });
 

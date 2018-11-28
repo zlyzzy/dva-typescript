@@ -46,23 +46,26 @@ export function getDepartmentCode(pathname: string): string {
   return _arry[_arry.length - 1];
 }
 
-export enum AlertType {
-  success,
-  error,
-  info,
-  warning,
-  warn,
-  loading
+/**
+ * 提示
+ * @param content  提示内容
+ * @param duration 显示时间，单位s
+ * @param type     提示类型 type: success/error/info/warning/warn/loading
+ */
+export function alert({
+  content = "操作成功",
+  duration = 1,
+  type = "success"
+}) {
+  message[type](content, duration);
 }
 /**
  *
- * @param options
- * 提示 type: success/error/info/warning/warn/loading
+ * @param obj 对象
  */
-export function alert(options: {
-  content: string;
-  duration?: 2000;
-  type: AlertType;
-}) {
-  message[options.type](options.content, duration);
+export function deepCopy(obj: object) {
+  if (!obj) {
+    return obj;
+  }
+  return JSON.parse(JSON.stringify(obj));
 }

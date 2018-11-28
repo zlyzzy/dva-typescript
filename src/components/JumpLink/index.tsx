@@ -3,15 +3,26 @@ import styles from "./index.less";
 import { connect } from "dva";
 import React, { Component } from "react";
 import queryString from "query-string";
-import { Card, Icon, Button, Modal, Form, Input, Select, Tooltip } from "antd";
+import {
+  Card,
+  Icon,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Select,
+  Tooltip,
+  Popconfirm
+} from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import { validateLink } from "UTILS/utils";
+import { validateLink, deepCopy } from "UTILS/utils";
 import { IdepartmentContent, Idepartment } from "INTERFACE/department";
 
 interface IProps extends FormComponentProps {
   dispatch?: any;
   departmentList: Array<Idepartment>;
   departmentContentList: Array<IdepartmentContent>;
+  currentDepartmentCode: string;
   contentObj: IdepartmentContent;
 }
 interface IState {
@@ -75,11 +86,38 @@ class JumpLink extends Component<IProps, IState> {
     });
     this.switchAddVisible(true);
   }
+  //移去平台
+  removeItem(e, link: IdepartmentContent) {
+    let obj = deepCopy(link);
+    obj.department = obj.department.filter(item => {
+      return item !== this.props.currentDepartmentCode;
+    });
+    obj.message = "移除成功";
+    this.props.dispatch({
+      type: "content/updateContent",
+      payload: obj
+    });
+  }
+
   //cardTitle渲染
   cardTitle = (link: IdepartmentContent) => {
     return (
       <div>
         <span>{link.name}</span>
+        <Popconfirm
+          placement="topLeft"
+          title="确定要将这个平台从此部门删除吗？"
+          onConfirm={e => {
+            this.removeItem(e, link);
+          }}
+          okText="确定"
+          cancelText="取消"
+        >
+          <Icon
+            type="delete"
+            className="pull-right pointer hover-error color-9 ml20"
+          />
+        </Popconfirm>
         <Icon
           type="edit"
           className="pull-right pointer hover-primary color-9"
@@ -274,6 +312,7 @@ function mapStateToProps(state) {
   return {
     departmentContentList: state.content.departmentContentList,
     departmentList: state.global.departmentList,
+    currentDepartmentCode: state.global.currentDepartmentCode,
     contentObj: state.content.contentObj
   };
 }

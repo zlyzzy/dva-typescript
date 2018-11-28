@@ -1,5 +1,5 @@
 import { Model } from "dva";
-import { getDepartmentCode, alert, AlertType } from "UTILS/utils";
+import { getDepartmentCode, alert } from "UTILS/utils";
 import {
   getDepartmentContent,
   addDepartmentContent,
@@ -60,7 +60,7 @@ export default {
           payload: result
         });
       } else {
-        alert({ type: AlertType.error, content: "请求列表失败" });
+        alert({ type: "error", content: "请求列表失败" });
       }
     },
     *addContent({ payload }, { call, put, select }) {
@@ -68,27 +68,29 @@ export default {
       const { success } = yield call(addDepartmentContent, payload);
       if (success) {
         //添加成功之后 重新请求
-        alert({ type: AlertType.success, content: "添加成功" });
+        alert({ type: "success", content: "添加成功" });
         yield put({
           type: "getDepartmentContent",
           payload: {}
         });
       } else {
-        alert({ type: AlertType.error, content: "添加失败" });
+        alert({ type: "error", content: "添加失败" });
       }
       return success;
     },
     *updateContent({ payload }, { call, put }) {
+      let message = payload.message ? payload.message : "修改成功";
+      delete payload.message;
       const { success } = yield call(updateContent, payload);
       if (success) {
         //添加成功之后 重新请求
-        alert({ type: AlertType.success, content: "修改成功" });
+        alert({ type: "success", content: message });
         yield put({
           type: "getDepartmentContent",
           payload: {}
         });
       } else {
-        alert({ type: AlertType.error, content: "修改失败" });
+        alert({ type: "error", content: "修改失败" });
       }
       return success;
     }

@@ -1,6 +1,6 @@
 import { Model } from "dva";
 import { department } from "SERVICES/department";
-import { isEmptyObject, AlertType } from "UTILS/utils";
+import { isEmptyObject } from "UTILS/utils";
 
 export default {
   namespace: "global",
@@ -41,7 +41,7 @@ export default {
           payload: info
         });
       } else {
-        alert({ type: AlertType.error, content: "获取部门列表失败" });
+        alert({ type: "error", content: "获取部门列表失败" });
       }
     }
   },
