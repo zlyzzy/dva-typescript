@@ -34,6 +34,13 @@ export default {
             icon: "home",
             _id: "0"
           },
+          {
+            name: "内部系统",
+            path: "/base/company/innerSystem",
+            code: "00",
+            icon: "project",
+            _id: "00"
+          },
           ...result
         ];
         yield put({
