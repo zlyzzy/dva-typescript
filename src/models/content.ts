@@ -24,22 +24,24 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
         //页面切换的时候 获取部门对应的列表
-        dispatch({
-          type: "getDepartmentContent",
-          payload: getDepartmentCode(pathname)
-        });
-        //这是因为页面切换的时候，上个页面的state 并没有被我清除，在此处做清除
-        dispatch({
-          type: "saveContentObj",
-          payload: {
-            _id: "",
-            name: "",
-            path: "",
-            guidePath: "",
-            describtion: "",
-            department: []
-          }
-        });
+        if (pathname.indexOf("/base/application/") > -1) {
+          dispatch({
+            type: "getDepartmentContent",
+            payload: getDepartmentCode(pathname)
+          });
+          //这是因为页面切换的时候，上个页面的state 并没有被我清除，在此处做清除
+          dispatch({
+            type: "saveContentObj",
+            payload: {
+              _id: "",
+              name: "",
+              path: "",
+              guidePath: "",
+              describtion: "",
+              department: []
+            }
+          });
+        }
       });
     }
   },

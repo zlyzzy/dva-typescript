@@ -207,13 +207,7 @@ class InnerSystem extends Component<IProps, { list: Array<listItem> }> {
                           </span>
                           <span>
                             {info.backName}：
-                            <a
-                              title={info.backName}
-                              href={info.backUrl}
-                              target="_blank"
-                            >
-                              {info.backUrl}
-                            </a>
+                            <span title={info.backName}>{info.backUrl}</span>
                           </span>
                         </div>
                       );
