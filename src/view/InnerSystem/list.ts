@@ -1,5 +1,3 @@
-//小飞侠
-
 export interface IListItem {
   title: string; //系统名称
   gitUrl: string;
@@ -14,7 +12,7 @@ export interface IListItem {
     }>;
   }>;
 }
-
+//飞侠
 const feixia_vue: IListItem = {
   title: "小飞侠",
   gitUrl: "http://192.168.1.7/amazing-f2e/feixia-vue",
@@ -280,7 +278,7 @@ const finance: IListItem = {
     }
   ]
 };
-
+//喂小保
 const wxb_manager: IListItem = {
   title: "喂小保管理系统",
   gitUrl: "http://192.168.1.7/amazing-f2e/wxb-manager",
