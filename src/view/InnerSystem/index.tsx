@@ -40,7 +40,7 @@ class InnerSystem extends Component<any, { list: Array<IListItem> }> {
                     {environment.info.map((info, info_index) => {
                       return (
                         <div className="ml15 mb5" key={info_index}>
-                          <span className="mr20">
+                          <span className="mr20 inline-block">
                             {info.name}：
                             <a
                               title={info.name}
@@ -50,7 +50,7 @@ class InnerSystem extends Component<any, { list: Array<IListItem> }> {
                               {info.url}
                             </a>
                           </span>
-                          <span>
+                          <span className="inline-block">
                             {info.backName}：
                             <span title={info.backName}>{info.backUrl}</span>
                           </span>

@@ -129,7 +129,7 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
           collapsible={true}
           collapsed={collapsed}
           breakpoint="md"
-          width={256}
+          width={180}
           onCollapse={this.onCollapse.bind(this)}
           className={styles.sider}
         >
