@@ -23,7 +23,6 @@ class InnerSystem extends Component<any, { list: Array<IListItem> }> {
   };
   render() {
     const { list } = this.state;
-    console.log(list);
     return (
       <div className={styles.innerSystem}>
         {list.map((item, item_index) => {
