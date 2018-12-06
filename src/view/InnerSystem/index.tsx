@@ -15,7 +15,7 @@ class InnerSystem extends Component<any, { list: Array<IListItem> }> {
     return (
       <div>
         <span className="mr5">{item.title}</span>
-        <a href={item.gitUrl} target="_blank">
+        <a href={item.gitUrl} target="_blank" className="fs16">
           ({item.gitName})
         </a>
       </div>

@@ -356,4 +356,23 @@ const wxb_manager: IListItem = {
   ]
 };
 
-export default [feixia_vue, platform, finance, wxb_manager];
+const grail_knight = {
+  title: "商城小程序后台",
+  gitUrl: "http://192.168.1.7/amazing-f2e/grail-knight",
+  gitName: "git仓库:grail-knight",
+  environmentList: [
+    {
+      title: "正式环境",
+      info: [
+        {
+          name: "前端",
+          url: "https://wmall-admin.wxb.com.cn",
+          backName: "后台",
+          backUrl: "https://wmall-admin-backend.wxb.com.cn/admin/"
+        }
+      ]
+    }
+  ]
+};
+
+export default [feixia_vue, platform, finance, wxb_manager, grail_knight];
