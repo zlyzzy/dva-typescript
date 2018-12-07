@@ -81,18 +81,16 @@ export default {
       return success;
     },
     *updateContent({ payload }, { call, put }) {
-      let message = payload.message ? payload.message : "修改成功";
-      delete payload.message;
       const { success } = yield call(updateContent, payload);
       if (success) {
         //添加成功之后 重新请求
-        alert({ type: "success", content: message });
+        alert({ type: "success", content: "操作成功" });
         yield put({
           type: "getDepartmentContent",
           payload: {}
         });
       } else {
-        alert({ type: "error", content: "修改失败" });
+        alert({ type: "error", content: "操作失败" });
       }
       return success;
     }

@@ -15,7 +15,8 @@ import {
   Popconfirm
 } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import { validateLink, deepCopy } from "UTILS/utils";
+import { validateLink } from "UTILS/utils";
+import { cloneDeep } from "lodash";
 import { IdepartmentContent, Idepartment } from "INTERFACE/department";
 
 interface IProps extends FormComponentProps {
@@ -88,11 +89,10 @@ class JumpLink extends Component<IProps, IState> {
   }
   //移去平台
   removeItem(e, link: IdepartmentContent) {
-    let obj = deepCopy(link);
+    let obj = cloneDeep(link);
     obj.department = obj.department.filter(item => {
       return item !== this.props.currentDepartmentCode;
     });
-    obj.message = "移除成功";
     this.props.dispatch({
       type: "content/updateContent",
       payload: obj
@@ -293,7 +293,11 @@ class JumpLink extends Component<IProps, IState> {
                   {this.props.departmentList.map(item => {
                     return (
                       item._id != "0" && (
-                        <Option value={item.code} key={item.code}>
+                        <Option
+                          value={item.code}
+                          key={item.code}
+                          disabled={item.code == "00"}
+                        >
                           {item.name}
                         </Option>
                       )

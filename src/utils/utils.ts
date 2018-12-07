@@ -1,6 +1,4 @@
 import { message } from "antd";
-import { func } from "prop-types";
-import { duration } from "moment";
 export function setStorage(obj: { name: string; value: string }): void {
   window.localStorage.setItem(obj.name, obj.value);
 }
@@ -59,15 +57,3 @@ export function alert({
 }) {
   message[type](content, duration);
 }
-/**
- *
- * @param obj 对象
- */
-export function deepCopy(obj: object) {
-  if (!obj) {
-    return obj;
-  }
-  return JSON.parse(JSON.stringify(obj));
-}
-
-/** */
