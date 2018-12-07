@@ -8,7 +8,7 @@ export default {
     collapsed: false, //全局折叠
     defaultList: [
       {
-        name: "首页",
+        name: "订阅",
         path: "/base/index",
         code: "0",
         icon: "home",
