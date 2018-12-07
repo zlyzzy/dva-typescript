@@ -13,6 +13,13 @@ export default {
         code: "0",
         icon: "home",
         _id: "0"
+      },
+      {
+        name: "内部系统",
+        path: "/base/company/innerSystem",
+        code: "00",
+        icon: "project",
+        _id: "00"
       }
     ],
     departmentList: [], //勾选的部门菜单
@@ -39,16 +46,7 @@ export default {
       if (success) {
         yield put({
           type: "saveAllDepartmentList",
-          payload: [
-            {
-              name: "内部系统",
-              path: "/base/company/innerSystem",
-              code: "00",
-              icon: "project",
-              _id: "00"
-            },
-            ...result
-          ]
+          payload: [...result]
         });
       } else {
         alert({ type: "error", content: "获取部门列表失败" });

@@ -21,7 +21,7 @@ import { IdepartmentContent, Idepartment } from "INTERFACE/department";
 
 interface IProps extends FormComponentProps {
   dispatch?: any;
-  departmentList: Array<Idepartment>;
+  allDepartmentList: Array<Idepartment>;
   departmentContentList: Array<IdepartmentContent>;
   currentDepartmentCode: string;
   contentObj: IdepartmentContent;
@@ -85,6 +85,12 @@ class JumpLink extends Component<IProps, IState> {
     this.setState({
       title: "编辑平台"
     });
+    if (!this.props.allDepartmentList.length) {
+      this.props.dispatch({
+        type: "global/getAllDepartmentList",
+        payload: {}
+      });
+    }
     this.switchAddVisible(true);
   }
   //移去平台
@@ -290,14 +296,10 @@ class JumpLink extends Component<IProps, IState> {
                   style={{ width: "100%" }}
                   placeholder="请选择所属部门"
                 >
-                  {this.props.departmentList.map(item => {
+                  {this.props.allDepartmentList.map(item => {
                     return (
                       item._id != "0" && (
-                        <Option
-                          value={item.code}
-                          key={item.code}
-                          disabled={item.code == "00"}
-                        >
+                        <Option value={item.code} key={item.code}>
                           {item.name}
                         </Option>
                       )
@@ -315,7 +317,7 @@ class JumpLink extends Component<IProps, IState> {
 function mapStateToProps(state) {
   return {
     departmentContentList: state.content.departmentContentList,
-    departmentList: state.global.departmentList,
+    allDepartmentList: state.global.allDepartmentList,
     currentDepartmentCode: state.global.currentDepartmentCode,
     contentObj: state.content.contentObj
   };
