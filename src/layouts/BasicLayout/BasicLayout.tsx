@@ -6,6 +6,7 @@ import React from "react";
 import { ContainerQuery } from "react-container-query";
 import styles from "./BasicLayout.less";
 import { Idepartment } from "INTERFACE/department";
+import { getStorage } from "UTILS/utils";
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -38,6 +39,7 @@ interface IProps {
   path?: any;
   departmentList: Array<Idepartment>;
   currentDepartmentName: string;
+  defaultList: Array<Idepartment>;
 }
 interface IState {
   openKeys?: any;
@@ -46,27 +48,26 @@ interface IState {
 @connect(state => ({
   collapsed: state.global.collapsed,
   departmentList: state.global.departmentList,
-  currentDepartmentName: state.global.currentDepartmentName
+  currentDepartmentName: state.global.currentDepartmentName,
+  defaultList: state.global.defaultList
 }))
 export default class BasicLayout extends React.PureComponent<IProps, IState> {
   constructor(props) {
     super(props);
-    this.props
-      .dispatch({
-        type: "global/getDepartmentList",
-        payload: {}
-      })
-      .then(res => {
-        //获取list之后 整理出map,然后获取当前map的内容
-        this.props.dispatch({
-          type: "global/saveDepartmentMap",
-          payload: this.props.departmentList
-        });
-        this.props.dispatch({
-          type: "global/saveCurrentDepartment",
-          payload: this.props.location.pathname
-        });
-      });
+
+    this.props.dispatch({
+      type: "global/saveDepartmentList",
+      payload: JSON.parse(getStorage("departmentList")) || []
+    });
+    //获取list之后 整理出map,然后获取当前map的内容
+    this.props.dispatch({
+      type: "global/saveDepartmentMap"
+    });
+    this.props.dispatch({
+      type: "global/saveCurrentDepartment",
+      payload: this.props.location.pathname
+    });
+
     this.state = {
       selectedKeys: this.setSelectedKeys()
     };
@@ -101,7 +102,8 @@ export default class BasicLayout extends React.PureComponent<IProps, IState> {
 
   //获取侧栏菜单
   getNavMenuItems(departmentList: Array<Idepartment>) {
-    return departmentList.map(item => {
+    let list = [...this.props.defaultList, ...departmentList];
+    return list.map(item => {
       return (
         <Menu.Item key={item.path}>
           {/^https?:\/\//.test(item.path) ? (
