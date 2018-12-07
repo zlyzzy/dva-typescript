@@ -27,7 +27,7 @@ class IndexPage extends Component<IProps, any> {
       checkAll: false
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     this.getList();
   }
 
